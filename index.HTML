@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>우리 WON 뱅킹 시뮬레이터</title>
+    
+    <link rel="apple-touch-icon" href="data:image/png;base64,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">
+    <link rel="apple-touch-icon-precomposed" href="data:image/png;base64,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">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="우리WON">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wonBlue: '#0043A8',
+                        wonLightBlue: '#00B1EB',
+                        wonBg: '#F3F6FA',
+                        wonText: '#1A1A1A',
+                        wonGray: '#8E8E93',
+                        wonCardBg: '#E9F1FC',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+            background-color: #000;
+        }
+        
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #00B1EB;
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-dot {
+            transform: translateX(100%);
+        }
+
+        .phone-container {
+            max-width: 430px;
+            height: 100vh;
+            margin: 0 auto;
+            position: relative;
+            background-color: #F3F6FA;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .safe-top {
+            padding-top: env(safe-area-inset-top, 47px);
+        }
+        .safe-bottom {
+            padding-bottom: env(safe-area-inset-bottom, 34px);
+        }
+
+        .dynamic-island-container {
+            position: absolute;
+            top: 10.5px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 170px;
+        }
+
+        .cubic-bezier-spring {
+            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.05);
+        }
+
+        .perspective-1000 { 
+            perspective: 1000px;
+        }
+        
+        .transform-style-3d { 
+            transform-style: preserve-3d;
+            will-change: transform; 
+        }
+        
+        .delay-0 { animation-delay: 0s; }
+        .delay-1 { animation-delay: -0.05s; }
+        .delay-2 { animation-delay: -0.10s; }
+        
+        @keyframes smooth-spin-1 {
+            0% { transform: rotate3d(1, 1, 0.5, 0deg); }
+            100% { transform: rotate3d(1, 1, 0.5, 360deg); }
+        }
+
+        @keyframes smooth-spin-2 {
+            0% { transform: rotate3d(1.2, -0.6, 0.8, 0deg); }
+            100% { transform: rotate3d(1.2, -0.6, 0.8, 360deg); }
+        }
+
+        @keyframes smooth-spin-3 {
+            0% { transform: rotate3d(-0.5, 0.8, -1, 0deg); }
+            100% { transform: rotate3d(-0.5, 0.8, -1, 360deg); }
+        }
+        
+        .animate-smooth-spin-1 { animation: smooth-spin-1 0.9s linear infinite; }
+        .animate-smooth-spin-2 { animation: smooth-spin-2 0.9s linear infinite; }
+        .animate-smooth-spin-3 { animation: smooth-spin-3 0.9s linear infinite; }
+
+        @keyframes success-bounce {
+            0% { transform: scale(0.88); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        .animate-success-bounce {
+            animation: success-bounce 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
+        }
+
+        @keyframes draw-mark {
+            0% { stroke-dashoffset: 40; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .draw-checkmark {
+            stroke-dasharray: 40;
+            stroke-dashoffset: 40;
+            animation: draw-mark 0.3s ease-out forwards;
+            animation-delay: 0.1s;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="phone-container w-full">
+        
+        <div class="dynamic-island-container">
+            <div 
+                id="dynamic-island" 
+                class="bg-black flex flex-col items-center justify-center overflow-hidden border border-zinc-900/60 shadow-xl transition-all duration-500 cubic-bezier-spring rounded-[22px] w-[120px] h-[30px]"
+            >
+                <div class="relative w-full h-full flex items-center justify-center">
+                    
+                    <div 
+                        id="status-scanning" 
+                        class="absolute w-24 h-24 flex items-center justify-center perspective-1000 transition-all duration-500 ease-out opacity-0 scale-75 pointer-events-none"
+                    >
+                        <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D] rounded-full animate-smooth-spin-1 transform-style-3d delay-0"></div>
+                        <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/60 rounded-full animate-smooth-spin-1 transform-style-3d delay-1"></div>
+                        <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/20 rounded-full animate-smooth-spin-1 transform-style-3d delay-2"></div>
+
+                        <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D] rounded-full animate-smooth-spin-2 transform-style-3d delay-0"></div>
+                        <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/60 rounded-full animate-smooth-spin-2 transform-style-3d delay-1"></div>
+                        <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/20 rounded-full animate-smooth-spin-2 transform-style-3d delay-2"></div>
+
+                        <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D] rounded-full animate-smooth-spin-3 transform-style-3d delay-0"></div>
+                        <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/60 rounded-full animate-smooth-spin-3 transform-style-3d delay-1"></div>
+                        <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/20 rounded-full animate-smooth-spin-3 transform-style-3d delay-2"></div>
+                    </div>
+
+                    <div 
+                        id="status-success" 
+                        class="absolute w-24 h-24 flex items-center justify-center transition-all duration-400 ease-out opacity-0 scale-75 pointer-events-none"
+                    >
+                        <div class="w-14 h-14 border-[3.8px] border-[#8CEE9D] rounded-full flex items-center justify-center bg-[#8CEE9D]/5 shadow-[0_0_15px_rgba(140,238,157,0.2)]">
+                            <svg class="w-6 h-6 text-[#8CEE9D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path id="checkmark-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.5" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="splash-screen" class="absolute inset-0 bg-white z-40 flex flex-col justify-between items-center py-20 transition-all duration-500">
+            <div></div>
+            <div id="splash-logo" class="flex flex-col items-center transition-all duration-500 transform scale-100 opacity-100">
+                <div class="relative w-28 h-16 mb-4">
+                    <div class="absolute left-0 top-0 w-16 h-16 rounded-full bg-wonLightBlue opacity-70"></div>
+                    <div class="absolute right-0 top-0 w-16 h-16 rounded-full bg-wonBlue"></div>
+                </div>
+                <div class="text-wonBlue font-black text-4xl tracking-wider mt-2">WON</div>
+            </div>
+            
+            <div id="splash-footer" class="flex flex-col items-center space-y-6 transition-opacity duration-300 opacity-100">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-[#D12B26] text-white px-2.5 py-1 text-center rounded-sm" style="font-family: Arial, sans-serif;">
+                        <div class="text-xs font-black tracking-tighter leading-none">iF</div>
+                        <div class="text-[6px] font-bold tracking-tight">DESIGN</div>
+                        <div class="text-[6px] font-bold tracking-tight">AWARD</div>
+                        <div class="text-[6px] font-bold tracking-tight">2026</div>
+                    </div>
+                    <div class="border border-wonBlue text-wonBlue p-1 rounded flex items-center space-x-1">
+                        <span class="text-xs font-extrabold px-1 bg-wonBlue text-white rounded-sm">MA</span>
+                        <div class="flex flex-col text-[6px] font-bold leading-none">
+                            <span>Mobile Accessibility</span>
+                            <span>모바일 접근성 인증</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-wonBlue font-bold text-lg tracking-widest mt-2">우리은행</div>
+            </div>
+        </div>
+
+        <div id="main-screen" class="hidden flex-col h-full w-full">
+            <div class="safe-top bg-wonBg"></div>
+            <header class="px-5 py-3 flex justify-between items-center bg-wonBg">
+                <div class="flex bg-gray-200 p-0.5 rounded-full text-xs font-bold w-32 shadow-inner">
+                    <button class="flex-1 py-1.5 rounded-full bg-white text-gray-800 text-center shadow-sm">일반홈</button>
+                    <button class="flex-1 py-1.5 rounded-full text-gray-500 text-center">쉬운</button>
+                </div>
+                <div class="flex items-center space-x-4 text-gray-700">
+                    <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white border border-gray-100 shadow-sm cursor-pointer">
+                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    </div>
+                    <div class="relative cursor-pointer">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </div>
+                    <div class="cursor-pointer">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto px-5 space-y-4 no-scrollbar pb-24">
+                <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-4 flex justify-between items-center relative overflow-hidden shadow-sm border border-pink-100">
+                    <div class="z-10">
+                        <p class="text-[11px] text-pink-500 font-bold mb-1">🎁 생일 축하 이벤트</p>
+                        <h4 class="text-sm font-bold text-gray-800 leading-snug">TO. 6월 생일 고객님<br>선물을 골라주세요!</h4>
+                    </div>
+                    <div class="flex space-x-1 items-end z-10">
+                        <span class="text-3xl">🎈</span>
+                        <span class="text-4xl">🦖</span>
+                        <span class="text-3xl">🎈</span>
+                    </div>
+                    <div class="absolute right-2 top-2 text-gray-300 font-bold text-xs opacity-40 cursor-pointer">✕</div>
+                </div>
+
+                <div class="bg-wonCardBg/40 border border-wonCardBg rounded-2xl p-4 relative">
+                    <p class="text-xs text-wonBlue font-bold mb-1">청약 계좌도 홈에서 바로 확인해 보세요!</p>
+                    <p class="text-[11px] text-gray-500 mb-3">자주 쓰는 계좌를 추가하면 더 편해요.</p>
+                    <div class="bg-white rounded-xl p-3 flex justify-between items-center shadow-sm">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-9 h-9 rounded-full bg-wonBlue flex items-center justify-center text-white font-extrabold text-sm">청</div>
+                            <div>
+                                <h5 class="text-xs font-bold text-gray-800">주택청약종합저축</h5>
+                                <p class="text-[10px] text-gray-400">1073-319-368950</p>
+                            </div>
+                        </div>
+                        <button class="bg-wonBlue text-white text-[11px] font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1 shadow-sm">
+                            <span>+ 홈에 추가</span>
+                        </button>
+                    </div>
+                    <div class="absolute right-3 top-3 text-gray-300 font-bold text-xs opacity-70 cursor-pointer">✕</div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 relative">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-wonBlue to-wonLightBlue flex items-center justify-center text-white font-black text-[10px]">WON</div>
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-800">WON 통장</h4>
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-[11px] text-gray-500">우리 1002-758-863813</span>
+                                    <svg class="w-3 h-3 text-gray-400 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="text-gray-400">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="my-5 cursor-pointer group" onclick="goToHistory()">
+                        <div class="text-3xl font-black text-gray-900 group-hover:text-wonBlue transition-colors" id="main-balance-text">
+                            3,243,710원
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button class="border border-gray-200 text-gray-700 text-xs font-bold px-4 py-2 rounded-xl bg-gray-50/50 hover:bg-gray-100 transition shadow-sm" onclick="goToHistory()">
+                            이체
+                        </button>
+                    </div>
+                </div>
+
+                <button class="w-full bg-white border border-gray-200 text-gray-700 text-sm font-bold py-3.5 rounded-xl hover:bg-gray-50 transition shadow-sm" onclick="goToHistory()">
+                    전체계좌보기
+                </button>
+
+                <div class="bg-[#F6F9F5] rounded-2xl p-4 flex justify-between items-center border border-emerald-100 shadow-sm">
+                    <div>
+                        <h5 class="text-sm font-bold text-gray-800">내 신용점수, 몇 점인가요?</h5>
+                        <p class="text-xs text-gray-500 mt-1">마이데이터로 바로 확인하고<br>신용점수 올리기까지!</p>
+                    </div>
+                    <div class="relative w-16 h-16">
+                        <svg viewBox="0 0 36 36" class="w-16 h-16 text-emerald-500">
+                            <path class="text-gray-200" stroke-width="4" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="text-emerald-500" stroke-dasharray="75, 100" stroke-width="4" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831" />
+                        </svg>
+                        <span class="absolute inset-0 flex items-center justify-center text-xs font-bold text-emerald-600">✓</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-100 flex justify-around items-center py-2.5 pb-6 text-[10px] text-gray-400 font-bold z-20">
+                <div class="flex flex-col items-center space-y-1 cursor-pointer">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span>상품</span>
+                </div>
+                <div class="flex flex-col items-center space-y-1 cursor-pointer">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z"></path></svg>
+                    <span>자산·소비</span>
+                </div>
+                <div class="flex flex-col items-center space-y-1 cursor-pointer text-wonBlue">
+                    <svg class="w-6 h-6 text-wonBlue" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                    <span>홈</span>
+                </div>
+                <div class="flex flex-col items-center space-y-1 cursor-pointer">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    <span>주식</span>
+                </div>
+                <div class="flex flex-col items-center space-y-1 cursor-pointer">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>혜택</span>
+                </div>
+            </nav>
+        </div>
+
+        <div id="history-screen" class="hidden flex-col h-full w-full bg-white">
+            <div class="safe-top bg-white"></div>
+            <header class="px-5 py-3 flex justify-between items-center bg-white">
+                <button class="text-gray-800 focus:outline-none" onclick="goToMain()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <h3 class="text-base font-bold text-gray-800">거래내역조회</h3>
+                <button class="text-wonBlue text-sm font-bold" onclick="openAddModal()">관리</button>
+            </header>
+
+            <div class="px-5 py-4 bg-white flex flex-col border-b border-gray-50">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-wonBlue to-wonLightBlue flex items-center justify-center text-white font-black text-xs">WON</div>
+                        <div>
+                            <div class="flex items-center space-x-1">
+                                <h4 class="text-[17px] font-extrabold text-gray-800">WON 통장</h4>
+                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                            <div class="flex items-center space-x-1 mt-0.5">
+                                <span class="text-xs text-gray-400">우리 1002-758-863813</span>
+                                <svg class="w-3 h-3 text-gray-300 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-right mt-2 mb-4">
+                    <div class="text-3xl font-extrabold text-gray-950 tracking-tight" id="detail-balance-text">3,243,710원</div>
+                    <div class="text-[11px] text-gray-400 font-semibold mt-1">출금가능금액 <span id="detail-available-text">3,243,710원</span></div>
+                </div>
+
+                <div class="flex space-x-2.5">
+                    <button class="flex-1 py-3 bg-[#EBF3FC] text-wonBlue font-bold text-sm rounded-xl hover:bg-blue-100 transition">모으기</button>
+                    <button class="flex-1 py-3 bg-[#3882F6] text-white font-bold text-sm rounded-xl hover:bg-blue-600 transition shadow-sm">이체</button>
+                </div>
+            </div>
+
+            <div class="px-5 py-3.5 space-y-3 bg-white border-b border-gray-100">
+                <div class="flex justify-between items-center text-sm">
+                    <div class="flex items-center space-x-1.5 text-gray-500 font-bold">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <input type="text" id="filter-date-input" class="bg-transparent border-b border-dashed border-gray-400 focus:border-wonBlue focus:outline-none font-bold text-gray-700 w-44 text-center pb-0.5" value="2026.04.01 ~ 2026.06.25" onchange="saveDateFilter()">
+                        <span class="text-xs text-gray-400 font-semibold">· 조회기간 · 전체</span>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <span class="text-[11px] text-gray-500 font-bold">잔액 표시</span>
+                        <div class="relative inline-block w-8 mr-1 align-middle select-none">
+                            <input type="checkbox" name="toggle" id="balance-toggle" checked onchange="toggleBalanceDisplay()" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-gray-300 appearance-none cursor-pointer focus:outline-none"/>
+                            <label for="balance-toggle" class="toggle-label block overflow-hidden h-4 rounded-full bg-gray-300 cursor-pointer"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto px-5 divide-y divide-gray-100 no-scrollbar pb-10" id="transaction-list-container"></div>
+            
+            <div class="p-3 bg-gray-50 text-center text-[10px] text-gray-400 border-t border-gray-100">
+                💡 내역을 터치하면 금액, 거래처, 잔액을 임의 조작하거나 삭제할 수 있습니다.
+            </div>
+        </div>
+
+    </div>
+
+    <div id="editor-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-end justify-center p-0 transition-opacity duration-300">
+        <div class="bg-white w-full max-w-[430px] rounded-t-3xl p-6 space-y-4 shadow-2xl transform translate-y-full transition-transform duration-300">
+            <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                <h4 class="text-base font-black text-gray-800" id="modal-title">거래 내역 수정</h4>
+                <button class="text-gray-400 hover:text-gray-600 font-bold text-lg" onclick="closeEditorModal()">✕</button>
+            </div>
+            <input type="hidden" id="edit-index" value="">
+            <div class="space-y-3 text-sm">
+                <div class="flex space-x-2">
+                    <button id="btn-type-expense" class="flex-1 py-2 rounded-xl border font-bold text-center transition" onclick="setModalType('expense')">출금(-)</button>
+                    <button id="btn-type-income" class="flex-1 py-2 rounded-xl border font-bold text-center transition" onclick="setModalType('income')">입금(+)</button>
+                </div>
+                <input type="hidden" id="edit-type" value="expense">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">거래처명</label>
+                    <input type="text" id="edit-title" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 focus:border-wonBlue focus:outline-none" placeholder="예: 우리카드결제대금">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">거래 일시 (월 일 시간)</label>
+                    <input type="text" id="edit-date" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 focus:border-wonBlue focus:outline-none" placeholder="예: 6월 15일 · 16:38:22">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">거래 금액</label>
+                    <input type="number" id="edit-amount" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 focus:border-wonBlue focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">거래 후 잔액</label>
+                    <input type="number" id="edit-balance" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 focus:border-wonBlue focus:outline-none">
+                </div>
+            </div>
+            <div class="flex space-x-2 pt-2">
+                <button id="btn-delete" class="bg-rose-50 text-rose-600 font-bold px-4 py-3 rounded-xl border border-rose-100" onclick="deleteTransaction()">삭제</button>
+                <button class="flex-1 bg-wonBlue text-white font-bold py-3 rounded-xl shadow-sm" onclick="saveTransaction()">변경 사항 저장</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="alert-modal" class="hidden fixed inset-0 bg-black/50 z-50 items-center justify-center p-6">
+        <div class="bg-white rounded-2xl w-full max-w-xs p-5 space-y-4 text-center shadow-2xl">
+            <h5 class="font-extrabold text-gray-800 text-base" id="alert-title">알림</h5>
+            <p class="text-sm text-gray-500 leading-relaxed" id="alert-message">메시지 내용</p>
+            <button class="w-full bg-wonBlue text-white font-bold py-2.5 rounded-xl text-sm" onclick="closeAlert()">확인</button>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="hidden fixed inset-0 bg-black/50 z-50 items-center justify-center p-6">
+        <div class="bg-white rounded-2xl w-full max-w-xs p-5 space-y-4 text-center shadow-2xl">
+            <h5 class="font-extrabold text-gray-800 text-base" id="confirm-title">확인</h5>
+            <p class="text-sm text-gray-500 leading-relaxed" id="confirm-message">진행하시겠습니까?</p>
+            <div class="flex space-x-2">
+                <button class="flex-1 bg-gray-100 text-gray-500 font-bold py-2.5 rounded-xl text-sm" onclick="resolveConfirm(false)">취소</button>
+                <button class="flex-1 bg-wonBlue text-white font-bold py-2.5 rounded-xl text-sm" onclick="resolveConfirm(true)">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const defaultTransactions = [
+            { id: 1, dateGroup: "6월 24일", time: "18:42:11", title: "배달의민족", amount: -24000, balance: 3243710 },
+            { id: 2, dateGroup: "6월 22일", time: "12:15:03", title: "네이버페이결제", amount: -48500, balance: 3267710 },
+            { id: 3, dateGroup: "6월 19일", time: "08:30:52", title: "GS25편의점", amount: -4200, balance: 3316210 },
+            { id: 4, dateGroup: "6월 15일", time: "16:38:22", title: "우리카드결제대금", amount: -415000, balance: 3320410 },
+            { id: 5, dateGroup: "6월 11일", time: "20:05:14", title: "쿠팡지이", amount: -32800, balance: 3735410 },
+            { id: 6, dateGroup: "6월 08일", time: "13:10:47", title: "스타벅스커피", amount: -6500, balance: 3768210 },
+            { id: 7, dateGroup: "6월 05일", time: "09:00:00", title: "우리은행급여", amount: 3784210, balance: 3774710 },
+            { id: 8, dateGroup: "6월 02일", time: "11:45:18", title: "약국결제", amount: -12500, balance: -95500 + 300000 }, 
+            { id: 9, dateGroup: "5월 28일", time: "19:30:00", title: "마켓컬리", amount: -54200, balance: 383000 },
+            { id: 10, dateGroup: "5월 24일", time: "15:22:04", title: "택시비(카카오)", amount: -14800, balance: 437200 },
+            { id: 11, dateGroup: "5월 20일", time: "12:50:33", title: "올리브영매장", amount: -28900, balance: 452000 },
+            { id: 12, dateGroup: "5월 15일", time: "16:40:00", title: "우리카드결제대금", amount: -521000, balance: 480900 },
+            { id: 13, dateGroup: "5월 10일", time: "09:12:05", title: "통신요금자동이체", amount: -68000, balance: 1001900 },
+            { id: 14, dateGroup: "5월 05일", time: "09:00:00", title: "우리은행급여", amount: 3784210, balance: 1069900 },
+            { id: 15, dateGroup: "5월 02일", time: "14:18:22", title: "식음료결제", amount: -8500, balance: 7285690 },
+            { id: 16, dateGroup: "4월 28일", time: "21:05:40", title: "교보문고인터넷", amount: -31400, balance: 7294190 },
+            { id: 17, dateGroup: "4월 25일", time: "12:30:11", title: "씨유편의점", amount: -5200, balance: 7325590 },
+            { id: 18, dateGroup: "4월 22일", time: "19:11:54", title: "현대오일뱅크", amount: -50000, balance: 7330790 },
+            { id: 19, dateGroup: "4월 18일", time: "08:15:00", title: "파리바게뜨", amount: -14500, balance: 7380790 },
+            { id: 20, dateGroup: "4월 15일", time: "16:35:10", title: "우리카드결제대금", amount: -489000, balance: 7395290 },
+            { id: 21, dateGroup: "4월 12일", time: "13:24:08", title: "네이버페이결제", amount: -24500, balance: 7884290 },
+            { id: 22, dateGroup: "4월 09일", time: "18:50:33", title: "식당석식", amount: -38000, balance: 7908790 },
+            { id: 23, dateGroup: "4월 05일", time: "09:00:00", title: "우리은행급여", amount: 3784210, balance: 7946790 },
+            { id: 24, dateGroup: "4월 02일", time: "10:05:44", title: "커피숍", amount: -4500, balance: 4162580 },
+            { id: 25, dateGroup: "4월 01일", time: "14:00:22", title: "초기잔액이관", amount: 0, balance: 4167080 }
+        ];
+        
+        let transactions = [];
+        let showBalance = true;
+        let confirmPromiseResolver = null;
+
+        let isRunning = false;
+        let timeouts = [];
+        function clearAllTimeouts() {
+            timeouts.forEach(t => clearTimeout(t));
+            timeouts = [];
+        }
+
+        function startFaceIDSequence() {
+            if (isRunning) return;
+            isRunning = true;
+            clearAllTimeouts();
+
+            const island = document.getElementById('dynamic-island');
+            const viewScanning = document.getElementById('status-scanning');
+            const viewSuccess = document.getElementById('status-success');
+            const checkmarkPath = document.getElementById('checkmark-path');
+            
+            island.classList.remove('w-[130px]', 'h-[130px]', 'opacity-0', 'scale-y-0', 'pointer-events-none');
+            island.classList.add('w-[120px]', 'h-[30px]');
+            viewScanning.className = "absolute w-24 h-24 flex items-center justify-center perspective-1000 transition-all duration-500 ease-out opacity-0 scale-75 pointer-events-none";
+            viewSuccess.className = "absolute w-24 h-24 flex items-center justify-center transition-all duration-400 ease-out opacity-0 scale-75 pointer-events-none";
+            checkmarkPath.classList.remove('draw-checkmark');
+            
+            island.classList.remove('w-[120px]', 'h-[30px]');
+            island.classList.add('w-[130px]', 'h-[130px]');
+
+            let t1 = setTimeout(() => {
+                viewScanning.classList.remove('opacity-0', 'scale-75', 'pointer-events-none');
+                viewScanning.classList.add('opacity-100', 'scale-100');
+            }, 250);
+            timeouts.push(t1);
+
+            let t2 = setTimeout(() => {
+                viewScanning.classList.remove('opacity-100', 'scale-100');
+                viewScanning.classList.add('opacity-0', 'scale-75', 'pointer-events-none');
+
+                viewSuccess.classList.remove('opacity-100', 'scale-100', 'animate-success-bounce');
+                viewSuccess.classList.add('opacity-100', 'scale-100', 'animate-success-bounce');
+                 
+                checkmarkPath.classList.add('draw-checkmark');
+            }, 1750);
+            timeouts.push(t2);
+
+            let t3 = setTimeout(() => {
+                viewSuccess.classList.remove('opacity-100', 'scale-100', 'animate-success-bounce');
+                viewSuccess.classList.add('opacity-0', 'scale-75', 'pointer-events-none');
+                checkmarkPath.classList.remove('draw-checkmark');
+
+                island.classList.remove('w-[130px]', 'h-[120px]');
+                island.classList.add('w-[100px]', 'h-[0px]', 'opacity-0', 'pointer-events-none');
+
+                const splash = document.getElementById('splash-screen');
+                splash.classList.add('opacity-0');
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    document.getElementById('main-screen').classList.remove('hidden');
+                    document.getElementById('main-screen').classList.add('flex');
+                    updateMainDashboard();
+                }, 400);
+            }, 2750);
+            timeouts.push(t3);
+
+            let t4 = setTimeout(() => {
+                isRunning = false;
+            }, 3250);
+            timeouts.push(t4);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const storedData = localStorage.getItem('won_banking_transactions');
+            const cachedDateFilter = localStorage.getItem('won_banking_date_filter');
+            
+            let forceReload = true;
+            if (storedData) {
+                const parsed = JSON.parse(storedData);
+                const hasNoNegative = parsed.some(tx => tx.balance >= 0);
+                if (hasNoNegative) {
+                    transactions = parsed;
+                    forceReload = false;
+                }
+            }
+
+            if (forceReload) {
+                transactions = [...defaultTransactions];
+                saveToLocalStorage();
+            }
+
+            if (cachedDateFilter) {
+                document.getElementById('filter-date-input').value = cachedDateFilter;
+            }
+
+            renderTransactions();
+            
+            setTimeout(() => {
+                startFaceIDSequence();
+            }, 500);
+        });
+
+        function saveToLocalStorage() {
+            localStorage.setItem('won_banking_transactions', JSON.stringify(transactions));
+        }
+
+        function saveDateFilter() {
+            const filterVal = document.getElementById('filter-date-input').value.trim();
+            localStorage.setItem('won_banking_date_filter', filterVal);
+        }
+
+        function updateMainDashboard() {
+            const mainBalanceText = document.getElementById('main-balance-text');
+            const detailBalanceText = document.getElementById('detail-balance-text');
+            const detailAvailableText = document.getElementById('detail-available-text');
+
+            if (transactions.length > 0) {
+                const latestBalance = transactions[0].balance;
+                const formatted = `${latestBalance.toLocaleString()}원`;
+                
+                mainBalanceText.textContent = formatted;
+                detailBalanceText.textContent = formatted;
+                detailAvailableText.textContent = formatted;
+            } else {
+                mainBalanceText.textContent = "0원";
+                detailBalanceText.textContent = "0원";
+                detailAvailableText.textContent = "0원";
+            }
+        }
+
+        function goToHistory() {
+            document.getElementById('main-screen').classList.remove('flex');
+            document.getElementById('main-screen').classList.add('hidden');
+            document.getElementById('history-screen').classList.remove('hidden');
+            document.getElementById('history-screen').classList.add('flex');
+            renderTransactions();
+            updateMainDashboard();
+        }
+
+        function goToMain() {
+            document.getElementById('history-screen').classList.remove('flex');
+            document.getElementById('history-screen').classList.add('hidden');
+            document.getElementById('main-screen').classList.remove('hidden');
+            document.getElementById('main-screen').classList.add('flex');
+            updateMainDashboard();
+        }
+
+        function toggleBalanceDisplay() {
+            showBalance = document.getElementById('balance-toggle').checked;
+            renderTransactions();
+        }
+
+        function renderTransactions() {
+            const container = document.getElementById('transaction-list-container');
+            container.innerHTML = "";
+
+            if (transactions.length === 0) {
+                container.innerHTML = `<div class="py-20 text-center text-gray-400 text-xs font-semibold">거래 내역이 존재하지 않습니다.</div>`;
+                return;
+            }
+
+            let currentGroupDate = "";
+            let groupDiv = null;
+            let itemsContainer = null;
+
+            transactions.forEach((tx, index) => {
+                if (tx.dateGroup !== currentGroupDate) {
+                    currentGroupDate = tx.dateGroup;
+                    
+                    groupDiv = document.createElement('div');
+                    groupDiv.className = "py-4 space-y-4";
+                    
+                    const dateHeader = document.createElement('div');
+                    dateHeader.className = "text-[12px] font-extrabold text-gray-400 mb-2 mt-1";
+                    dateHeader.textContent = tx.dateGroup;
+                    groupDiv.appendChild(dateHeader);
+
+                    itemsContainer = document.createElement('div');
+                    itemsContainer.className = "space-y-4";
+                    groupDiv.appendChild(itemsContainer);
+                     
+                    container.appendChild(groupDiv);
+                }
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = "flex justify-between items-center cursor-pointer active:bg-gray-50/70 py-1 rounded transition";
+                itemDiv.onclick = () => openEditModal(index);
+
+                const leftArea = document.createElement('div');
+                leftArea.className = "space-y-0.5";
+                
+                const titleNode = document.createElement('div');
+                titleNode.className = "text-[14px] font-bold text-gray-900";
+                titleNode.textContent = tx.title;
+
+                const timeNode = document.createElement('div');
+                timeNode.className = "text-[10px] text-gray-400 font-semibold";
+                timeNode.textContent = tx.time;
+                leftArea.appendChild(titleNode);
+                leftArea.appendChild(timeNode);
+
+                const rightArea = document.createElement('div');
+                rightArea.className = "text-right space-y-0.5";
+
+                const amountNode = document.createElement('div');
+                if (tx.amount > 0) {
+                    amountNode.className = "text-[15px] font-extrabold text-[#3882F6]";
+                    amountNode.textContent = `+${tx.amount.toLocaleString()}원`;
+                } else {
+                    amountNode.className = "text-[15px] font-extrabold text-gray-900";
+                    amountNode.textContent = `${tx.amount.toLocaleString()}원`;
+                }
+
+                const balanceNode = document.createElement('div');
+                balanceNode.className = "text-[10px] text-gray-400 font-semibold";
+                balanceNode.textContent = `잔액 ${tx.balance.toLocaleString()}원`;
+                
+                if (!showBalance) balanceNode.style.display = 'none';
+
+                rightArea.appendChild(amountNode);
+                rightArea.appendChild(balanceNode);
+
+                itemDiv.appendChild(leftArea);
+                itemDiv.appendChild(rightArea);
+
+                itemsContainer.appendChild(itemDiv);
+            });
+        }
+
+        function showAlert(title, message) {
+            document.getElementById('alert-title').textContent = title;
+            document.getElementById('alert-message').textContent = message;
+            const modal = document.getElementById('alert-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeAlert() {
+            document.getElementById('alert-modal').classList.add('hidden');
+        }
+
+        function showConfirm(title, message) {
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
+            document.getElementById('confirm-modal').classList.remove('hidden');
+            document.getElementById('confirm-modal').classList.add('flex');
+            return new Promise((resolve) => { confirmPromiseResolver = resolve; });
+        }
+
+        function resolveConfirm(decision) {
+            document.getElementById('confirm-modal').classList.add('hidden');
+            if (confirmPromiseResolver) { confirmPromiseResolver(decision); confirmPromiseResolver = null; }
+        }
+
+        function setModalType(type) {
+            const btnExpense = document.getElementById('btn-type-expense');
+            const btnIncome = document.getElementById('btn-type-income');
+            const typeInput = document.getElementById('edit-type');
+
+            if (type === 'expense') {
+                btnExpense.className = "flex-1 py-2.5 rounded-xl border-2 border-gray-900 bg-gray-900 text-white font-bold text-center transition";
+                btnIncome.className = "flex-1 py-2.5 rounded-xl border border-gray-200 text-gray-400 font-bold text-center hover:bg-gray-50 transition";
+                typeInput.value = 'expense';
+            } else {
+                btnIncome.className = "flex-1 py-2.5 rounded-xl border-2 border-[#3882F6] bg-[#3882F6] text-white font-bold text-center transition";
+                btnExpense.className = "flex-1 py-2.5 rounded-xl border border-gray-200 text-gray-400 font-bold text-center hover:bg-gray-50 transition";
+                typeInput.value = 'income';
+            }
+        }
+
+        function closeEditorModal() {
+            const modal = document.getElementById('editor-modal');
+            modal.querySelector('div').classList.add('translate-y-full');
+            setTimeout(() => { modal.classList.add('hidden'); }, 200);
+        }
+
+        function openEditModal(index) {
+            const modal = document.getElementById('editor-modal');
+            document.getElementById('modal-title').textContent = "거래 내역 수정";
+            document.getElementById('btn-delete').style.display = "block";
+
+            const tx = transactions[index];
+            document.getElementById('edit-index').value = index;
+            document.getElementById('edit-title').value = tx.title;
+            document.getElementById('edit-date').value = `${tx.dateGroup} · ${tx.time}`;
+            document.getElementById('edit-amount').value = Math.abs(tx.amount);
+            document.getElementById('edit-balance').value = tx.balance;
+
+            setModalType(tx.amount < 0 ? 'expense' : 'income');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => { modal.querySelector('div').classList.remove('translate-y-full'); }, 10);
+        }
+
+        function openAddModal() {
+            const modal = document.getElementById('editor-modal');
+            document.getElementById('modal-title').textContent = "새 거래 내역 등록";
+            document.getElementById('btn-delete').style.display = "none";
+            document.getElementById('edit-index').value = "-1";
+            document.getElementById('edit-title').value = "";
+            
+            const today = new Date();
+            document.getElementById('edit-date').value = `${today.getMonth() + 1}월 ${today.getDate()}일 · ${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+            document.getElementById('edit-amount').value = "";
+            document.getElementById('edit-balance').value = transactions.length > 0 ? transactions[0].balance : 0;
+            setModalType('expense');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => { modal.querySelector('div').classList.remove('translate-y-full'); }, 10);
+        }
+
+        function saveTransaction() {
+            const index = parseInt(document.getElementById('edit-index').value);
+            const title = document.getElementById('edit-title').value.trim();
+            const fullStr = document.getElementById('edit-date').value.trim();
+            const rawAmount = parseInt(document.getElementById('edit-amount').value);
+            const balance = parseInt(document.getElementById('edit-balance').value);
+            const type = document.getElementById('edit-type').value;
+
+            if (!title || !fullStr || isNaN(rawAmount) || isNaN(balance)) {
+                showAlert("입력 오류", "모든 입력값을 확인해 주세요.");
+                return;
+            }
+
+            let dateGroup = "6월 15일", time = "00:00:00";
+            if (fullStr.includes('·')) {
+                const parts = fullStr.split('·');
+                dateGroup = parts[0].trim(); time = parts[1].trim();
+            } else {
+                dateGroup = fullStr;
+            }
+
+            const amount = type === 'expense' ? -rawAmount : rawAmount;
+
+            if (index === -1) {
+                transactions.unshift({ id: Date.now(), dateGroup, time, title, amount, balance });
+            } else {
+                transactions[index] = { ...transactions[index], title, dateGroup, time, amount, balance };
+            }
+
+            saveToLocalStorage();
+            closeEditorModal();
+            renderTransactions();
+            updateMainDashboard();
+        }
+
+        async function deleteTransaction() {
+            const index = parseInt(document.getElementById('edit-index').value);
+            if (index !== -1 && await showConfirm("거래 내역 삭제", "정말 삭제하시겠습니까?")) {
+                transactions.splice(index, 1);
+                saveToLocalStorage();
+                closeEditorModal();
+                renderTransactions();
+                updateMainDashboard();
+            }
+        }
+    </script>
+</body>
+</html>
