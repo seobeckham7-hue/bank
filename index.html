@@ -46,6 +46,13 @@
             scrollbar-width: none;
         }
 
+        /* 💡 입력창 화살표 숨김 처리 */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
         .toggle-checkbox:checked + .toggle-label {
             background-color: #00B1EB;
         }
@@ -141,7 +148,6 @@
             animation-delay: 0.1s;
         }
 
-        /* 우리WON 뱅킹 특유의 두 점 로딩 스피너 애니메이션 */
         @keyframes woori-spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -149,6 +155,8 @@
         .animate-woori-spin {
             animation: woori-spin 0.75s infinite linear;
         }
+        
+        input { background: transparent; outline: none; border: none; width: 100%; }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen">
@@ -161,35 +169,24 @@
                 class="bg-black flex flex-col items-center justify-center overflow-hidden border border-zinc-900/60 shadow-xl transition-all duration-500 cubic-bezier-spring rounded-[22px] w-[120px] h-[30px]"
             >
                 <div class="relative w-full h-full flex items-center justify-center">
-                    
-                    <div 
-                        id="status-scanning" 
-                        class="absolute w-24 h-24 flex items-center justify-center perspective-1000 transition-all duration-500 ease-out opacity-0 scale-75 pointer-events-none"
-                    >
+                    <div id="status-scanning" class="absolute w-24 h-24 flex items-center justify-center perspective-1000 transition-all duration-500 ease-out opacity-0 scale-75 pointer-events-none">
                         <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D] rounded-full animate-smooth-spin-1 transform-style-3d delay-0"></div>
                         <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/60 rounded-full animate-smooth-spin-1 transform-style-3d delay-1"></div>
                         <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/20 rounded-full animate-smooth-spin-1 transform-style-3d delay-2"></div>
-
                         <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D] rounded-full animate-smooth-spin-2 transform-style-3d delay-0"></div>
                         <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/60 rounded-full animate-smooth-spin-2 transform-style-3d delay-1"></div>
                         <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/20 rounded-full animate-smooth-spin-2 transform-style-3d delay-2"></div>
-
                         <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D] rounded-full animate-smooth-spin-3 transform-style-3d delay-0"></div>
                         <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/60 rounded-full animate-smooth-spin-3 transform-style-3d delay-1"></div>
                         <div class="absolute w-12 h-12 border-[3.8px] border-[#8CEE9D]/20 rounded-full animate-smooth-spin-3 transform-style-3d delay-2"></div>
                     </div>
-
-                    <div 
-                        id="status-success" 
-                        class="absolute w-24 h-24 flex items-center justify-center transition-all duration-400 ease-out opacity-0 scale-75 pointer-events-none"
-                    >
+                    <div id="status-success" class="absolute w-24 h-24 flex items-center justify-center transition-all duration-400 ease-out opacity-0 scale-75 pointer-events-none">
                         <div class="w-14 h-14 border-[3.8px] border-[#8CEE9D] rounded-full flex items-center justify-center bg-[#8CEE9D]/5 shadow-[0_0_15px_rgba(140,238,157,0.2)]">
                             <svg class="w-6 h-6 text-[#8CEE9D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path id="checkmark-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.5" d="M5 13l4 4L19 7"></path>
                             </svg>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -245,34 +242,41 @@
                 </div>
             </header>
 
-            <div class="flex-1 overflow-y-auto px-5 space-y-4 no-scrollbar pb-24">
-                <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-4 flex justify-between items-center relative overflow-hidden shadow-sm border border-pink-100">
-                    <div class="z-10">
-                        <p class="text-[11px] text-pink-500 font-bold mb-1">🎁 생일 축하 이벤트</p>
-                        <h4 class="text-sm font-bold text-gray-800 leading-snug">TO. 6월 생일 고객님<br>선물을 골라주세요!</h4>
+            <div class="flex-1 overflow-y-auto px-5 space-y-4 pt-2 no-scrollbar pb-36">
+                
+                <div class="bg-pink-50 rounded-2xl p-4 flex justify-between items-center shadow-sm relative border border-pink-100">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-pink-100 rounded-xl flex items-center justify-center text-xl">🎁</div>
+                        <div>
+                            <p class="text-[13px] font-bold text-gray-900 leading-tight">세상에서 가장 아까운돈!</p>
+                            <p class="text-[13px] font-bold text-gray-900 leading-tight">통신비 제발 아끼세요!</p>
+                        </div>
                     </div>
-                    <div class="flex space-x-1 items-end z-10">
-                        <span class="text-3xl">🎈</span>
-                        <span class="text-4xl">🦖</span>
-                        <span class="text-3xl">🎈</span>
+                    <button class="absolute right-3 top-3 text-gray-400 text-sm font-bold">✕</button>
+                </div>
+
+                <div class="flex justify-between items-end px-1 mt-6 mb-2">
+                    <button class="bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center shadow-sm">⚙ 홈계좌설정</button>
+                    <div class="flex space-x-1 mb-1">
+                        <span class="text-3xl">🐝</span><span class="text-4xl -ml-2">🐻</span><span class="text-3xl -ml-2">🐧</span>
                     </div>
-                    <div class="absolute right-2 top-2 text-gray-300 font-bold text-xs opacity-40 cursor-pointer">✕</div>
+                    <div class="flex items-center bg-gray-500 rounded-full pl-2 pr-1 py-1 shadow-sm cursor-pointer">
+                        <span class="text-[11px] font-bold text-white mr-1">잔액숨김</span>
+                        <div class="w-4 h-4 bg-white rounded-full shadow-sm"></div>
+                    </div>
                 </div>
 
                 <div class="bg-wonCardBg/40 border border-wonCardBg rounded-2xl p-4 relative">
-                    <p class="text-xs text-wonBlue font-bold mb-1">청약 계좌도 홈에서 바로 확인해 보세요!</p>
-                    <p class="text-[11px] text-gray-500 mb-3">자주 쓰는 계좌를 추가하면 더 편해요.</p>
+                    <p class="text-[13px] text-center font-bold text-gray-800 mb-4">청약 계좌도 홈에서 바로 확인해 보세요!<br><span class="text-[11px] text-gray-500 font-normal">자주 쓰는 계좌를 추가하면 더 편해요.</span></p>
                     <div class="bg-white rounded-xl p-3 flex justify-between items-center shadow-sm">
                         <div class="flex items-center space-x-3">
                             <div class="w-9 h-9 rounded-full bg-wonBlue flex items-center justify-center text-white font-extrabold text-sm">청</div>
                             <div>
-                                <h5 class="text-xs font-bold text-gray-800">주택청약종합저축</h5>
-                                <p class="text-[10px] text-gray-400">1073-319-368950</p>
+                                <h5 class="text-[13px] font-bold text-gray-800">주택청약종합저축</h5>
+                                <p class="text-[11px] text-gray-400">1073-319-368950</p>
                             </div>
                         </div>
-                        <button class="bg-wonBlue text-white text-[11px] font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1 shadow-sm">
-                            <span>+ 홈에 추가</span>
-                        </button>
+                        <button class="bg-[#3882F6] text-white text-[11px] font-bold px-3 py-1.5 rounded-full shadow-sm">+ 홈에 추가</button>
                     </div>
                     <div class="absolute right-3 top-3 text-gray-300 font-bold text-xs opacity-70 cursor-pointer">✕</div>
                 </div>
@@ -282,69 +286,84 @@
                         <div class="flex items-center space-x-2">
                             <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-wonBlue to-wonLightBlue flex items-center justify-center text-white font-black text-[10px]">WON</div>
                             <div>
-                                <h4 class="text-sm font-bold text-gray-800">WON 통장</h4>
-                                <div class="flex items-center space-x-1">
-                                    <span class="text-[11px] text-gray-500">우리 1002-758-863813</span>
-                                    <svg class="w-3 h-3 text-gray-400 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
-                                </div>
+                                <h4 class="text-sm font-bold text-gray-800">WON 통장 <span class="text-gray-300 ml-1 font-light">⋮</span></h4>
+                                <p class="text-[11px] text-gray-500 mt-0.5">우리 1002-758-863813 <span class="ml-1 border rounded px-0.5 text-[9px] text-gray-400">❐</span></p>
                             </div>
                         </div>
-                        <button class="text-gray-400">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
-                        </button>
                     </div>
-
                     <div class="my-5 cursor-pointer group" onclick="goToHistory()">
-                        <div class="text-3xl font-black text-gray-900 group-hover:text-wonBlue transition-colors" id="main-balance-text">
-                            0원
-                        </div>
+                        <div class="text-3xl font-black text-gray-900 group-hover:text-wonBlue transition-colors" id="main-balance-text">0원</div>
                     </div>
-
                     <div class="flex justify-end">
-                        <button class="border border-gray-200 text-gray-700 text-xs font-bold px-4 py-2 rounded-xl bg-gray-50/50 hover:bg-gray-100 transition shadow-sm" onclick="goToHistory()">
-                            이체
-                        </button>
+                        <button class="border border-gray-200 text-gray-700 text-xs font-bold px-4 py-2 rounded-full bg-white hover:bg-gray-50 transition shadow-sm" onclick="goToHistory()">이체</button>
                     </div>
                 </div>
 
-                <button class="w-full bg-white border border-gray-200 text-gray-700 text-sm font-bold py-3.5 rounded-xl hover:bg-gray-50 transition shadow-sm" onclick="goToHistory()">
+                <button class="w-full bg-white border border-gray-200 text-gray-700 text-sm font-bold py-3.5 rounded-xl shadow-sm" onclick="goToHistory()">
                     전체계좌보기
                 </button>
 
-                <div class="bg-[#F6F9F5] rounded-2xl p-4 flex justify-between items-center border border-emerald-100 shadow-sm">
+                <div class="bg-[#F6F9F5] rounded-2xl p-4 flex justify-between items-center border border-emerald-50 shadow-sm">
                     <div>
-                        <h5 class="text-sm font-bold text-gray-800">내 신용점수, 몇 점인가요?</h5>
+                        <h5 class="text-[15px] font-bold text-gray-800">내 신용점수, 몇 점인가요?</h5>
                         <p class="text-xs text-gray-500 mt-1">마이데이터로 바로 확인하고<br>신용점수 올리기까지!</p>
                     </div>
                     <div class="relative w-16 h-16">
-                        <svg viewBox="0 0 36 36" class="w-16 h-16 text-emerald-500">
-                            <path class="text-gray-200" stroke-width="4" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path class="text-emerald-500" stroke-dasharray="75, 100" stroke-width="4" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831" />
-                        </svg>
-                        <span class="absolute inset-0 flex items-center justify-center text-xs font-bold text-emerald-600">✓</span>
+                        <div class="absolute inset-0 bg-blue-500 rounded-full opacity-80"></div>
+                        <div class="absolute left-0 top-0 w-12 h-12 bg-blue-400 rounded-full shadow-lg"></div>
+                        <div class="absolute right-0 bottom-0 w-6 h-6 bg-emerald-400 border-2 border-white rounded-full flex items-center justify-center text-white text-[10px] font-black z-10 shadow-sm">✓</div>
                     </div>
                 </div>
+
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-50">
+                    <h3 class="text-[15px] font-bold text-gray-900 mb-5">우리금융그룹 서비스</h3>
+                    <div class="flex justify-between items-center px-1 mb-6">
+                        <div class="flex flex-col items-center space-y-1.5 cursor-pointer">
+                            <span class="text-2xl">🛍️</span><span class="text-[11px] text-gray-500 font-bold">상품</span>
+                        </div>
+                        <div class="flex flex-col items-center space-y-1.5 cursor-pointer">
+                            <span class="text-2xl">📊</span><span class="text-[11px] text-gray-500 font-bold">자산·소비</span>
+                        </div>
+                        <div class="flex flex-col items-center space-y-1.5 cursor-pointer">
+                            <span class="text-2xl text-wonBlue">🏠</span><span class="text-[11px] text-wonBlue font-bold">홈</span>
+                        </div>
+                        <div class="flex flex-col items-center space-y-1.5 cursor-pointer">
+                            <span class="text-2xl">📈</span><span class="text-[11px] text-gray-500 font-bold">주식</span>
+                        </div>
+                        <div class="flex flex-col items-center space-y-1.5 cursor-pointer">
+                            <span class="text-2xl">🎁</span><span class="text-[11px] text-gray-500 font-bold">혜택</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-full p-2 flex items-center justify-between border border-gray-100 shadow-sm cursor-pointer">
+                        <div class="flex items-center">
+                            <span class="bg-gray-500 text-white text-[11px] px-3 py-1 rounded-full font-bold mr-3">공지</span>
+                            <span class="text-[14px] text-gray-800 font-medium">2차 고유가 피해지원금 신청</span>
+                        </div>
+                        <span class="text-gray-400 font-bold text-lg pr-2">›</span>
+                    </div>
+                </div>
+
             </div>
 
             <nav class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-100 flex justify-around items-center py-2.5 pb-6 text-[10px] text-gray-400 font-bold z-20">
                 <div class="flex flex-col items-center space-y-1 cursor-pointer">
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                     <span>상품</span>
                 </div>
                 <div class="flex flex-col items-center space-y-1 cursor-pointer">
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z"></path></svg>
+                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z"></path></svg>
                     <span>자산·소비</span>
                 </div>
                 <div class="flex flex-col items-center space-y-1 cursor-pointer text-wonBlue">
-                    <svg class="w-6 h-6 text-wonBlue" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                    <svg class="w-7 h-7 text-wonBlue" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
                     <span>홈</span>
                 </div>
                 <div class="flex flex-col items-center space-y-1 cursor-pointer">
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                     <span>주식</span>
                 </div>
                 <div class="flex flex-col items-center space-y-1 cursor-pointer">
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <span>혜택</span>
                 </div>
             </nav>
@@ -352,7 +371,7 @@
 
         <div id="history-screen" class="hidden flex-col h-full w-full bg-white">
             <div class="safe-top bg-white"></div>
-            <header class="px-5 py-3 flex justify-between items-center bg-white z-10">
+            <header class="px-5 py-3 flex justify-between items-center bg-white z-10 border-b border-gray-50">
                 <button class="text-gray-800 focus:outline-none" onclick="goToMain()">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
@@ -374,12 +393,10 @@
                     </div>
                 </div>
                 <div class="flex-1 flex flex-col items-center justify-center relative min-h-[280px]">
-                    
                     <div class="relative w-10 h-10 animate-woori-spin mb-16">
                         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[7px] h-[7px] bg-[#00B1EB] rounded-full"></div>
                         <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[7px] h-[7px] bg-[#0043A8] rounded-full"></div>
                     </div>
-                    
                     <div class="absolute bottom-10 left-0 right-0 px-5 space-y-6 opacity-50">
                         <div class="flex justify-between items-center">
                             <div class="space-y-2 w-1/3">
@@ -422,8 +439,8 @@
                     </div>
 
                     <div class="text-right mt-2 mb-4">
-                        <div class="text-3xl font-extrabold text-gray-950 tracking-tight" id="detail-balance-text">3,243,710원</div>
-                        <div class="text-[11px] text-gray-400 font-semibold mt-1">출금가능금액 <span id="detail-available-text">3,243,710원</span></div>
+                        <div class="text-3xl font-extrabold text-gray-950 tracking-tight" id="detail-balance-text">3,000,000원</div>
+                        <div class="text-[11px] text-gray-400 font-semibold mt-1">출금가능금액 <span id="detail-available-text">3,000,000원</span></div>
                     </div>
 
                     <div class="flex space-x-2.5">
@@ -436,7 +453,7 @@
                     <div class="flex justify-between items-center text-sm">
                         <div class="flex items-center space-x-1.5 text-gray-500 font-bold">
                             <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            <input type="text" id="filter-date-input" class="bg-transparent border-b border-dashed border-gray-400 focus:border-wonBlue focus:outline-none font-bold text-gray-700 w-44 text-center pb-0.5" value="2026.04.01 ~ 2026.06.25" onchange="saveDateFilter()">
+                            <input type="text" id="filter-date-input" class="bg-transparent border-b border-dashed border-gray-400 focus:border-wonBlue focus:outline-none font-bold text-gray-700 w-44 text-center pb-0.5" value="2026.03.25 ~ 2026.06.25" onchange="saveDateFilter()">
                             <span class="text-xs text-gray-400 font-semibold">· 조회기간 · 전체</span>
                         </div>
                         
@@ -450,50 +467,87 @@
                     </div>
                 </div>
 
-                <div class="flex-1 overflow-y-auto px-5 divide-y divide-gray-100 no-scrollbar pb-10" id="transaction-list-container"></div>
-                
-                <div class="p-3 bg-gray-50 text-center text-[10px] text-gray-400 border-t border-gray-100">
-                    💡 내역을 터치하면 금액, 거래처, 잔액을 임의 조작하거나 삭제할 수 있습니다.
-                </div>
+                <div class="flex-1 overflow-y-auto px-5 divide-y divide-gray-50 no-scrollbar pb-32" id="transaction-list-container"></div>
             </div>
         </div>
 
     </div>
 
-    <div id="editor-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-end justify-center p-0 transition-opacity duration-300">
-        <div class="bg-white w-full max-w-[430px] rounded-t-3xl p-6 space-y-4 shadow-2xl transform translate-y-full transition-transform duration-300">
-            <div class="flex justify-between items-center pb-2 border-b border-gray-100">
-                <h4 class="text-base font-black text-gray-800" id="modal-title">거래 내역 수정</h4>
-                <button class="text-gray-400 hover:text-gray-600 font-bold text-lg" onclick="closeEditorModal()">✕</button>
-            </div>
+    <div id="detail-edit-screen" class="hidden absolute inset-0 bg-white z-[300] flex flex-col">
+        <div class="safe-top bg-white"></div>
+        <header class="px-5 py-4 flex justify-between items-center bg-white border-b border-gray-50">
+            <button class="text-gray-800 focus:outline-none" onclick="closeDetailEdit()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <h3 class="text-[17px] font-bold text-gray-900" id="modal-view-title">거래내역 상세</h3>
+            <div class="w-6"></div> </header>
+
+        <div class="flex-1 overflow-y-auto pt-8 pb-10 no-scrollbar">
             <input type="hidden" id="edit-index" value="">
-            <div class="space-y-3 text-sm">
-                <div class="flex space-x-2">
-                    <button id="btn-type-expense" class="flex-1 py-2 rounded-xl border font-bold text-center transition" onclick="setModalType('expense')">출금(-)</button>
-                    <button id="btn-type-income" class="flex-1 py-2 rounded-xl border font-bold text-center transition" onclick="setModalType('income')">입금(+)</button>
-                </div>
-                <input type="hidden" id="edit-type" value="expense">
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-1">거래처명</label>
-                    <input type="text" id="edit-title" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 focus:border-wonBlue focus:outline-none" placeholder="예: 우리카드결제대금">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-1">거래 일시 (월 일 시간)</label>
-                    <input type="text" id="edit-date" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 focus:border-wonBlue focus:outline-none" placeholder="예: 6월 15일 · 16:38:22">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-1">거래 금액</label>
-                    <input type="number" id="edit-amount" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 focus:border-wonBlue focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-1">거래 후 잔액</label>
-                    <input type="number" id="edit-balance" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 focus:border-wonBlue focus:outline-none">
+            
+            <div class="px-6 mb-8 flex flex-col items-center">
+                <input type="text" id="edit-title" class="text-[22px] font-bold text-gray-900 w-full mb-1 text-center bg-transparent placeholder-gray-300" placeholder="거래처명 입력" oninput="updateSearchLabel()">
+                <div class="flex items-center justify-center text-[28px] font-bold w-full" id="edit-amount-container">
+                    <span id="edit-type-mark" onclick="toggleAmountType()" class="cursor-pointer select-none px-1.5 transition-colors">-</span>
+                    <input type="number" id="edit-amount" class="text-center font-bold bg-transparent placeholder-gray-200 w-auto max-w-[200px]" placeholder="0">
+                    <span class="pl-0.5">원</span>
                 </div>
             </div>
-            <div class="flex space-x-2 pt-2">
-                <button id="btn-delete" class="bg-rose-50 text-rose-600 font-bold px-4 py-3 rounded-xl border border-rose-100" onclick="deleteTransaction()">삭제</button>
-                <button class="flex-1 bg-wonBlue text-white font-bold py-3 rounded-xl shadow-sm" onclick="saveTransaction()">변경 사항 저장</button>
+
+            <div class="border-t-[10px] border-[#F3F6FA]"></div>
+
+            <div class="px-6 pt-2 pb-4">
+                <div class="py-4 flex justify-between items-center border-b border-gray-50">
+                    <span class="text-[14px] text-gray-500 font-medium w-24">메모등록</span>
+                    <div class="flex items-center flex-1 justify-end group">
+                        <input type="text" id="edit-memo" class="text-right text-[#3882F6] text-[14px] w-full font-semibold bg-transparent" placeholder="메모를 입력해 보세요">
+                        <span class="text-gray-300 ml-1.5 text-lg font-bold">›</span>
+                    </div>
+                </div>
+                <div class="py-4 flex justify-between items-center border-b border-gray-50">
+                    <span class="text-[14px] text-gray-500 font-medium w-24">거래일시</span>
+                    <input type="text" id="edit-datetime" class="text-right text-gray-900 text-[14px] flex-1 font-medium bg-transparent" placeholder="2026.06.20 21:26:56">
+                </div>
+                <div class="py-4 flex justify-between items-center border-b border-gray-50">
+                    <span class="text-[14px] text-gray-500 font-medium w-24">거래구분</span>
+                    <input type="text" id="edit-category" class="text-right text-gray-900 text-[14px] flex-1 font-medium bg-transparent" placeholder="체크우리">
+                </div>
+                <div class="py-4 flex justify-between items-center border-b border-gray-50">
+                    <span class="text-[14px] text-gray-500 font-medium w-24">거래후 잔액</span>
+                    <input type="text" id="edit-balance-auto" class="text-right text-gray-900 text-[14px] flex-1 font-bold bg-transparent" readonly placeholder="저장 시 자동 계산">
+                </div>
+                <div class="py-4 flex justify-between items-center border-b border-gray-50">
+                    <span class="text-[14px] text-gray-500 font-medium w-24">의뢰인</span>
+                    <input type="text" id="edit-client" class="text-right text-gray-900 text-[14px] flex-1 font-medium bg-transparent" placeholder="입력하세요">
+                </div>
+                <div class="py-4 flex justify-between items-center border-b border-gray-50">
+                    <span class="text-[14px] text-gray-500 font-medium w-24">수표금액</span>
+                    <input type="text" id="edit-check" class="text-right text-gray-900 text-[14px] flex-1 font-medium bg-transparent" placeholder="0원">
+                </div>
+                <div class="py-4 flex justify-between items-center">
+                    <span class="text-[14px] text-gray-500 font-medium w-24">취급점</span>
+                    <input type="text" id="edit-branch" class="text-right text-gray-900 text-[14px] flex-1 font-medium bg-transparent" placeholder="개인영업전략부">
+                </div>
             </div>
+
+            <div class="border-t-[10px] border-[#F3F6FA]"></div>
+
+            <div class="px-6 py-6 flex justify-between items-center cursor-pointer">
+                <span class="text-[15px] text-gray-800 font-semibold flex items-center" id="search-title-label">
+                    <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    '검색어' 검색하기
+                </span>
+                <span class="text-gray-300 text-lg font-bold">›</span>
+            </div>
+            
+            <div class="text-center pb-4 pt-2">
+                <span class="text-[10.5px] font-bold text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full">💡 하단 [공유] 버튼 클릭 시 내역 삭제 가능</span>
+            </div>
+        </div>
+
+        <div class="p-4 pb-8 bg-white flex space-x-2.5 shadow-[0_-10px_20px_rgba(0,0,0,0.03)] z-10 border-t border-gray-50">
+            <button class="flex-[1] bg-[#F0F5FC] text-[#3882F6] font-bold py-3.5 rounded-xl text-[15px]" onclick="deleteTransaction()">공유</button>
+            <button class="flex-[2.5] bg-wonBlue text-white font-bold py-3.5 rounded-xl text-[15px] shadow-sm" onclick="saveTransaction()">확인</button>
         </div>
     </div>
 
@@ -517,39 +571,107 @@
     </div>
 
     <script>
-        // 💡 6월 25일 3,000,000원 기준으로 역산하여 1원도 틀리지 않게 완벽하게 세팅된 맞춤형 현실 내역 데이터
         const defaultTransactions = [
-            { id: 1, dateGroup: "6월 25일", time: "10:00:00", title: "우리첫거래적금2", amount: -600000, balance: 3000000 },
-            { id: 2, dateGroup: "6월 24일", time: "19:05:41", title: "배달의민족", amount: -27000, balance: 3600000 },
-            { id: 3, dateGroup: "6월 22일", time: "08:15:33", title: "GS25 부산서면", amount: -4800, balance: 3627000 },
-            { id: 4, dateGroup: "6월 19일", time: "23:45:10", title: "해외 MANCITY", amount: -120000, balance: 3631800 },
-            { id: 5, dateGroup: "6월 15일", time: "18:05:22", title: "우리카드결제대금", amount: -1150000, balance: 3751800 },
-            { id: 6, dateGroup: "6월 11일", time: "21:10:05", title: "마켓컬리", amount: -54000, balance: 4901800 },
-            { id: 7, dateGroup: "6월 08일", time: "12:40:11", title: "스타벅스", amount: -9000, balance: 4955800 },
-            { id: 8, dateGroup: "6월 05일", time: "09:00:00", title: "콤비(주) 급여", amount: 3784210, balance: 4964800 },
-            { id: 9, dateGroup: "6월 02일", time: "14:30:20", title: "온누리약국", amount: -8500, balance: 1180590 },
-            { id: 10, dateGroup: "5월 28일", time: "10:15:00", title: "삼성증권(대체)", amount: -3000000, balance: 1189090 },
-            { id: 11, dateGroup: "5월 24일", time: "23:05:40", title: "카카오T", amount: -12400, balance: 4189090 },
-            { id: 12, dateGroup: "5월 20일", time: "19:22:15", title: "올리브영", amount: -32000, balance: 4201490 },
-            { id: 13, dateGroup: "5월 15일", time: "18:10:00", title: "우리카드결제대금", amount: -920000, balance: 4233490 },
-            { id: 14, dateGroup: "5월 10일", time: "18:50:30", title: "배달의민족", amount: -24000, balance: 5153490 },
-            { id: 15, dateGroup: "5월 05일", time: "09:00:00", title: "콤비(주) 급여", amount: 3784210, balance: 5177490 },
-            { id: 16, dateGroup: "5월 02일", time: "08:45:12", title: "GS25 부산서면", amount: -5200, balance: 1393280 },
-            { id: 17, dateGroup: "4월 28일", time: "09:30:00", title: "DB손해보험", amount: -85000, balance: 1398480 },
-            { id: 18, dateGroup: "4월 25일", time: "22:15:45", title: "해외 Patreon", amount: -15000, balance: 1483480 },
-            { id: 19, dateGroup: "4월 22일", time: "13:40:00", title: "토스증권(투자)", amount: -2000000, balance: 1498480 },
-            { id: 20, dateGroup: "4월 18일", time: "10:11:33", title: "U+알뜰모바일", amount: -33000, balance: 3498480 },
-            { id: 21, dateGroup: "4월 15일", time: "18:05:10", title: "우리카드결제대금", amount: -850000, balance: 3531480 },
-            { id: 22, dateGroup: "4월 12일", time: "14:20:05", title: "해외 iHerb", amount: -65400, balance: 4381480 },
-            { id: 23, dateGroup: "4월 09일", time: "19:15:22", title: "돼지국밥", amount: -28000, balance: 4446880 },
-            { id: 24, dateGroup: "4월 05일", time: "09:00:00", title: "콤비(주) 급여", amount: 3784210, balance: 4474880 },
-            { id: 25, dateGroup: "4월 02일", time: "12:30:15", title: "스타벅스 부산역점", amount: -4500, balance: 690670 },
-            { id: 26, dateGroup: "4월 01일", time: "10:00:00", title: "초기잔액이관", amount: 0, balance: 695170 }
+            { id: 1, dateGroup: "6월 25일", time: "12:00:00", title: "친구 이체(박수진)", amount: 12000, balance: 0 },
+            { id: 2, dateGroup: "6월 25일", time: "10:00:00", title: "우리첫거래적금2", amount: -100000, balance: 0 },
+            { id: 3, dateGroup: "6월 24일", time: "19:05:41", title: "배달의민족", amount: -28000, balance: 0 },
+            { id: 4, dateGroup: "6월 23일", time: "12:40:00", title: "삼성증권(입금)", amount: 300000, balance: 0 },
+            { id: 5, dateGroup: "6월 22일", time: "08:15:33", title: "GS25 부산서면", amount: -6500, balance: 0 },
+            { id: 6, dateGroup: "6월 20일", time: "23:45:10", title: "카카오T", amount: -9800, balance: 0 },
+            { id: 7, dateGroup: "6월 18일", time: "22:15:45", title: "해외 Patreon", amount: -15000, balance: 0 },
+            { id: 8, dateGroup: "6월 17일", time: "10:11:33", title: "U+알뜰모바일", amount: -33000, balance: 0 },
+            { id: 9, dateGroup: "6월 16일", time: "08:30:00", title: "파리바게뜨", amount: -8500, balance: 0 },
+            { id: 10, dateGroup: "6월 15일", time: "18:05:22", title: "우리카드결제대금", amount: -1250000, balance: 0 },
+            { id: 11, dateGroup: "6월 14일", time: "15:00:00", title: "중고거래 입금", amount: 50000, balance: 0 },
+            { id: 12, dateGroup: "6월 13일", time: "19:45:10", title: "해외 MANCITY", amount: -120000, balance: 0 },
+            { id: 13, dateGroup: "6월 11일", time: "21:10:05", title: "마켓컬리", amount: -62000, balance: 0 },
+            { id: 14, dateGroup: "6월 10일", time: "19:30:00", title: "배달의민족", amount: -25000, balance: 0 },
+            { id: 15, dateGroup: "6월 09일", time: "14:20:05", title: "해외 iHerb", amount: -72000, balance: 0 },
+            { id: 16, dateGroup: "6월 07일", time: "12:40:11", title: "스타벅스", amount: -12000, balance: 0 },
+            { id: 17, dateGroup: "6월 05일", time: "09:00:00", title: "콤비(주) 급여", amount: 3784210, balance: 0 },
+            { id: 18, dateGroup: "6월 04일", time: "18:10:00", title: "친구 이체(최지훈)", amount: 20000, balance: 0 },
+            { id: 19, dateGroup: "6월 02일", time: "14:30:20", title: "온누리약국", amount: -8500, balance: 0 },
+            { id: 20, dateGroup: "6월 01일", time: "13:20:00", title: "Booklive", amount: -18000, balance: 0 },
+            { id: 21, dateGroup: "5월 30일", time: "18:50:30", title: "배달의민족", amount: -22000, balance: 0 },
+            { id: 22, dateGroup: "5월 28일", time: "10:15:00", title: "삼성증권(대체)", amount: -1000000, balance: 0 },
+            { id: 23, dateGroup: "5월 27일", time: "09:30:00", title: "DB손해보험", amount: -85000, balance: 0 },
+            { id: 24, dateGroup: "5월 26일", time: "21:10:05", title: "마켓컬리", amount: -54200, balance: 0 },
+            { id: 25, dateGroup: "5월 25일", time: "15:00:00", title: "쇼핑몰 환불", amount: 45000, balance: 0 },
+            { id: 26, dateGroup: "5월 24일", time: "08:45:12", title: "GS25", amount: -7500, balance: 0 },
+            { id: 27, dateGroup: "5월 22일", time: "23:05:40", title: "카카오T", amount: -12400, balance: 0 },
+            { id: 28, dateGroup: "5월 21일", time: "19:30:00", title: "마켓컬리", amount: -54200, balance: 0 },
+            { id: 29, dateGroup: "5월 20일", time: "22:15:45", title: "해외 Patreon", amount: -15000, balance: 0 },
+            { id: 30, dateGroup: "5월 18일", time: "10:11:33", title: "U+알뜰모바일", amount: -33000, balance: 0 },
+            { id: 31, dateGroup: "5월 16일", time: "12:00:00", title: "맘스터치", amount: -3000, balance: 0 },
+            { id: 32, dateGroup: "5월 15일", time: "18:10:00", title: "우리카드결제대금", amount: -1150000, balance: 0 },
+            { id: 33, dateGroup: "5월 14일", time: "19:00:00", title: "카카오T", amount: -9800, balance: 0 },
+            { id: 34, dateGroup: "5월 12일", time: "13:40:00", title: "토스증권(투자)", amount: -1000000, balance: 0 },
+            { id: 35, dateGroup: "5월 11일", time: "12:30:00", title: "친구 이체(이준호)", amount: 30000, balance: 0 },
+            { id: 36, dateGroup: "5월 10일", time: "18:50:30", title: "배달의민족", amount: -28000, balance: 0 },
+            { id: 37, dateGroup: "5월 08일", time: "19:22:15", title: "올리브영", amount: -45000, balance: 0 },
+            { id: 38, dateGroup: "5월 06일", time: "10:15:00", title: "삼성증권(대체)", amount: -2000000, balance: 0 },
+            { id: 39, dateGroup: "5월 05일", time: "09:00:00", title: "콤비(주) 급여", amount: 3784210, balance: 0 },
+            { id: 40, dateGroup: "5월 03일", time: "14:20:00", title: "해외 마이프로틴", amount: -85000, balance: 0 },
+            { id: 41, dateGroup: "5월 01일", time: "12:40:00", title: "스타벅스", amount: -5000, balance: 0 },
+            { id: 42, dateGroup: "4월 30일", time: "18:50:30", title: "배달의민족", amount: -24000, balance: 0 },
+            { id: 43, dateGroup: "4월 28일", time: "15:30:00", title: "교보문고", amount: -31400, balance: 0 },
+            { id: 44, dateGroup: "4월 27일", time: "09:30:00", title: "DB손해보험", amount: -85000, balance: 0 },
+            { id: 45, dateGroup: "4월 26일", time: "15:00:00", title: "토스증권(입금)", amount: 250000, balance: 0 },
+            { id: 46, dateGroup: "4월 25일", time: "12:30:00", title: "CU 편의점", amount: -4200, balance: 0 },
+            { id: 47, dateGroup: "4월 23일", time: "18:15:00", title: "CGV 서면", amount: -14000, balance: 0 },
+            { id: 48, dateGroup: "4월 21일", time: "19:40:00", title: "네이버페이결제", amount: -42000, balance: 0 },
+            { id: 49, dateGroup: "4월 20일", time: "22:15:45", title: "해외 Patreon", amount: -15000, balance: 0 },
+            { id: 50, dateGroup: "4월 18일", time: "10:11:33", title: "U+알뜰모바일", amount: -33000, balance: 0 },
+            { id: 51, dateGroup: "4월 16일", time: "08:20:00", title: "메가커피", amount: -3500, balance: 0 },
+            { id: 52, dateGroup: "4월 15일", time: "18:05:10", title: "우리카드결제대금", amount: -850000, balance: 0 },
+            { id: 53, dateGroup: "4월 13일", time: "18:30:00", title: "배달의민족", amount: -28000, balance: 0 },
+            { id: 54, dateGroup: "4월 12일", time: "14:20:05", title: "해외 iHerb", amount: -65400, balance: 0 },
+            { id: 55, dateGroup: "4월 11일", time: "12:45:00", title: "Booklive", amount: -15000, balance: 0 },
+            { id: 56, dateGroup: "4월 09일", time: "19:15:22", title: "돼지국밥", amount: -18000, balance: 0 },
+            { id: 57, dateGroup: "4월 08일", time: "20:10:00", title: "쿠팡 환불", amount: 12500, balance: 0 },
+            { id: 58, dateGroup: "4월 06일", time: "13:40:00", title: "토스증권(투자)", amount: -1500000, balance: 0 },
+            { id: 59, dateGroup: "4월 05일", time: "09:00:00", title: "콤비(주) 급여", amount: 3784210, balance: 0 },
+            { id: 60, dateGroup: "4월 04일", time: "18:00:00", title: "친구 이체(김민수)", amount: 15000, balance: 0 },
+            { id: 61, dateGroup: "4월 02일", time: "12:20:00", title: "올리브영 서면점", amount: -32000, balance: 0 },
+            { id: 62, dateGroup: "4월 01일", time: "19:05:00", title: "카카오T", amount: -11500, balance: 0 },
+            { id: 63, dateGroup: "3월 31일", time: "08:45:12", title: "GS25 서면점", amount: -4200, balance: 0 },
+            { id: 64, dateGroup: "3월 30일", time: "15:20:00", title: "당근마켓 입금", amount: 35000, balance: 0 },
+            { id: 65, dateGroup: "3월 29일", time: "19:15:22", title: "식당석식 (부산밀면)", amount: -18000, balance: 0 },
+            { id: 66, dateGroup: "3월 28일", time: "09:30:00", title: "DB손해보험", amount: -85000, balance: 0 },
+            { id: 67, dateGroup: "3월 27일", time: "12:30:00", title: "스타벅스 부산역점", amount: -5000, balance: 0 },
+            { id: 68, dateGroup: "3월 26일", time: "18:45:00", title: "배달의민족", amount: -24000, balance: 0 },
+            { id: 69, dateGroup: "3월 25일", time: "14:30:00", title: "DMM 포인트 결제", amount: -25000, balance: 0 },
+            { id: 70, dateGroup: "3월 25일", time: "10:00:00", title: "초기잔액이관", amount: 0, balance: 0 }
         ];
         
         let transactions = [];
         let showBalance = true;
         let confirmPromiseResolver = null;
+
+        function getTxDateValue(tx) {
+            try {
+                const match = tx.dateGroup.match(/(\d+)월\s*(\d+)일/);
+                const month = parseInt(match[1]) - 1;
+                const day = parseInt(match[2]);
+                const timeParts = tx.time.split(':');
+                const hours = parseInt(timeParts[0]) || 0;
+                const minutes = parseInt(timeParts[1]) || 0;
+                const seconds = parseInt(timeParts[2]) || 0;
+                return new Date(2026, month, day, hours, minutes, seconds).getTime();
+            } catch (e) {
+                return 0;
+            }
+        }
+
+        function recalculateAllBalances() {
+            transactions.sort((a, b) => getTxDateValue(a) - getTxDateValue(b));
+            let runningBalance = 1188470; 
+            transactions.forEach(tx => {
+                runningBalance += tx.amount;
+                tx.balance = runningBalance;
+            });
+            transactions.sort((a, b) => getTxDateValue(b) - getTxDateValue(a));
+        }
 
         let isRunning = false;
         let timeouts = [];
@@ -586,10 +708,8 @@
             let t2 = setTimeout(() => {
                 viewScanning.classList.remove('opacity-100', 'scale-100');
                 viewScanning.classList.add('opacity-0', 'scale-75', 'pointer-events-none');
-
                 viewSuccess.classList.remove('opacity-100', 'scale-100', 'animate-success-bounce');
                 viewSuccess.classList.add('opacity-100', 'scale-100', 'animate-success-bounce');
-                 
                 checkmarkPath.classList.add('draw-checkmark');
             }, 1750);
             timeouts.push(t2);
@@ -620,38 +740,34 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            // 💡 v4 키를 사용하여 예전 기본 내역 데이터를 무시하고 새 내역(300만원 맞춤 세팅)으로 강제 로드
-            const storedData = localStorage.getItem('won_banking_transactions_v4');
+            const storedData = localStorage.getItem('won_banking_transactions_v10');
             const cachedDateFilter = localStorage.getItem('won_banking_date_filter');
             
             let forceReload = true;
             if (storedData) {
-                const parsed = JSON.parse(storedData);
-                const hasNoNegative = parsed.some(tx => tx.balance >= 0);
-                if (hasNoNegative) {
-                    transactions = parsed;
-                    forceReload = false;
-                }
+                transactions = JSON.parse(storedData);
+                forceReload = false;
             }
 
             if (forceReload) {
                 transactions = [...defaultTransactions];
-                saveToLocalStorage();
             }
+            
+            recalculateAllBalances();
+            saveToLocalStorage();
 
             if (cachedDateFilter) {
                 document.getElementById('filter-date-input').value = cachedDateFilter;
+            } else {
+                document.getElementById('filter-date-input').value = "2026.03.25 ~ 2026.06.25";
             }
 
             renderTransactions();
-            
-            setTimeout(() => {
-                startFaceIDSequence();
-            }, 500);
+            setTimeout(() => { startFaceIDSequence(); }, 500);
         });
 
         function saveToLocalStorage() {
-            localStorage.setItem('won_banking_transactions_v4', JSON.stringify(transactions));
+            localStorage.setItem('won_banking_transactions_v10', JSON.stringify(transactions));
         }
 
         function saveDateFilter() {
@@ -667,7 +783,6 @@
             if (transactions.length > 0) {
                 const latestBalance = transactions[0].balance;
                 const formatted = `${latestBalance.toLocaleString()}원`;
-                
                 mainBalanceText.textContent = formatted;
                 detailBalanceText.textContent = formatted;
                 detailAvailableText.textContent = formatted;
@@ -678,7 +793,6 @@
             }
         }
 
-        // 🔄 로딩 감성을 추가한 내역 화면 이동 함수
         function goToHistory() {
             document.getElementById('main-screen').classList.remove('flex');
             document.getElementById('main-screen').classList.add('hidden');
@@ -688,19 +802,16 @@
             const loadingView = document.getElementById('history-loading-view');
             const mainView = document.getElementById('history-main-view');
 
-            // 1. 로딩 스켈레톤 먼저 노출
             loadingView.classList.remove('hidden');
             loadingView.classList.add('flex');
             mainView.classList.remove('flex');
             mainView.classList.add('hidden');
             
-            // 2. 실제 앱 속도에 맞춘 0.65초 딜레이 타이머 작동
             setTimeout(() => {
                 loadingView.classList.remove('flex');
                 loadingView.classList.add('hidden');
                 mainView.classList.remove('hidden');
                 mainView.classList.add('flex');
-                
                 renderTransactions();
                 updateMainDashboard();
             }, 650);
@@ -735,7 +846,6 @@
             transactions.forEach((tx, index) => {
                 if (tx.dateGroup !== currentGroupDate) {
                     currentGroupDate = tx.dateGroup;
-                    
                     groupDiv = document.createElement('div');
                     groupDiv.className = "py-4 space-y-4";
                     
@@ -747,7 +857,6 @@
                     itemsContainer = document.createElement('div');
                     itemsContainer.className = "space-y-4";
                     groupDiv.appendChild(itemsContainer);
-                     
                     container.appendChild(groupDiv);
                 }
 
@@ -791,7 +900,6 @@
 
                 itemDiv.appendChild(leftArea);
                 itemDiv.appendChild(rightArea);
-
                 itemsContainer.appendChild(itemDiv);
             });
         }
@@ -821,108 +929,150 @@
             if (confirmPromiseResolver) { confirmPromiseResolver(decision); confirmPromiseResolver = null; }
         }
 
-        function setModalType(type) {
-            const btnExpense = document.getElementById('btn-type-expense');
-            const btnIncome = document.getElementById('btn-type-income');
-            const typeInput = document.getElementById('edit-type');
-
-            if (type === 'expense') {
-                btnExpense.className = "flex-1 py-2.5 rounded-xl border-2 border-gray-900 bg-gray-900 text-white font-bold text-center transition";
-                btnIncome.className = "flex-1 py-2.5 rounded-xl border border-gray-200 text-gray-400 font-bold text-center hover:bg-gray-50 transition";
-                typeInput.value = 'expense';
+        // 💡 동적 색상 변경 (입/출금 토글 시 파란색 <-> 검정색)
+        function toggleAmountType() {
+            const mark = document.getElementById('edit-type-mark');
+            const container = document.getElementById('edit-amount-container');
+            if (mark.textContent === '-') {
+                mark.textContent = '+';
+                container.classList.remove('text-gray-900');
+                container.classList.add('text-[#3882F6]');
             } else {
-                btnIncome.className = "flex-1 py-2.5 rounded-xl border-2 border-[#3882F6] bg-[#3882F6] text-white font-bold text-center transition";
-                btnExpense.className = "flex-1 py-2.5 rounded-xl border border-gray-200 text-gray-400 font-bold text-center hover:bg-gray-50 transition";
-                typeInput.value = 'income';
+                mark.textContent = '-';
+                container.classList.remove('text-[#3882F6]');
+                container.classList.add('text-gray-900');
             }
         }
 
-        // 모달 닫기
-        function closeEditorModal() {
-            const modal = document.getElementById('editor-modal');
-            modal.querySelector('div').classList.add('translate-y-full');
-            setTimeout(() => { modal.classList.add('hidden'); }, 200);
+        // 💡 검색어 텍스트 실시간 연동
+        function updateSearchLabel() {
+            const val = document.getElementById('edit-title').value.trim() || '검색어';
+            document.getElementById('search-title-label').innerHTML = `<svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>'${val}' 검색하기`;
         }
 
-        // 수정 모달 열기
+        function closeDetailEdit() {
+            document.getElementById('detail-edit-screen').classList.add('hidden');
+        }
+
         function openEditModal(index) {
-            const modal = document.getElementById('editor-modal');
-            document.getElementById('modal-title').textContent = "거래 내역 수정";
-            document.getElementById('btn-delete').style.display = "block";
+            const modal = document.getElementById('detail-edit-screen');
+            document.getElementById('modal-view-title').textContent = "거래내역 상세";
 
             const tx = transactions[index];
             document.getElementById('edit-index').value = index;
             document.getElementById('edit-title').value = tx.title;
-            document.getElementById('edit-date').value = `${tx.dateGroup} · ${tx.time}`;
             document.getElementById('edit-amount').value = Math.abs(tx.amount);
-            document.getElementById('edit-balance').value = tx.balance;
+            
+            // 토글 및 색상 초기화
+            const mark = document.getElementById('edit-type-mark');
+            const container = document.getElementById('edit-amount-container');
+            if (tx.amount >= 0) {
+                mark.textContent = "+";
+                container.classList.remove('text-gray-900');
+                container.classList.add('text-[#3882F6]');
+            } else {
+                mark.textContent = "-";
+                container.classList.remove('text-[#3882F6]');
+                container.classList.add('text-gray-900');
+            }
+            
+            // 날짜 및 기타 항목 맵핑
+            let mm = tx.dateGroup.match(/(\d+)월/)?.[1].padStart(2, '0') || '01';
+            let dd = tx.dateGroup.match(/(\d+)일/)?.[1].padStart(2, '0') || '01';
+            document.getElementById('edit-datetime').value = `2026.${mm}.${dd} ${tx.time}`;
+            document.getElementById('edit-balance-auto').value = tx.balance.toLocaleString() + "원";
+            updateSearchLabel();
 
-            setModalType(tx.amount < 0 ? 'expense' : 'income');
+            document.getElementById('edit-memo').value = tx.memo || "";
+            document.getElementById('edit-category').value = tx.category || "체크우리";
+            document.getElementById('edit-client').value = tx.client || "0695201600096398";
+            document.getElementById('edit-check').value = tx.checkAmount || "0원";
+            document.getElementById('edit-branch').value = tx.branch || "개인영업전략부(카드)";
+
             modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            setTimeout(() => { modal.querySelector('div').classList.remove('translate-y-full'); }, 10);
         }
 
-        // 신규 추가 모달 열기
         function openAddModal() {
-            const modal = document.getElementById('editor-modal');
-            document.getElementById('modal-title').textContent = "새 거래 내역 등록";
-            document.getElementById('btn-delete').style.display = "none";
+            const modal = document.getElementById('detail-edit-screen');
+            document.getElementById('modal-view-title').textContent = "새 거래 내역 등록";
             document.getElementById('edit-index').value = "-1";
             document.getElementById('edit-title').value = "";
+            document.getElementById('edit-amount').value = "";
+            
+            // 토글 및 색상 초기화 (기본 지출)
+            const mark = document.getElementById('edit-type-mark');
+            const container = document.getElementById('edit-amount-container');
+            mark.textContent = "-";
+            container.classList.remove('text-[#3882F6]');
+            container.classList.add('text-gray-900');
             
             const today = new Date();
-            document.getElementById('edit-date').value = `${today.getMonth() + 1}월 ${today.getDate()}일 · ${String(today.getHours()).padStart(2, '0')}:${String(today.getMinutes()).padStart(2, '0')}:${String(today.getSeconds()).padStart(2, '0')}`;
-            document.getElementById('edit-amount').value = "";
-            document.getElementById('edit-balance').value = transactions.length > 0 ? transactions[0].balance : 0;
-            setModalType('expense');
+            document.getElementById('edit-datetime').value = `2026.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')} ${String(today.getHours()).padStart(2, '0')}:${String(today.getMinutes()).padStart(2, '0')}:${String(today.getSeconds()).padStart(2, '0')}`;
+            
+            document.getElementById('edit-balance-auto').value = "";
+            updateSearchLabel();
+
+            document.getElementById('edit-memo').value = "";
+            document.getElementById('edit-category').value = "스마트뱅킹";
+            document.getElementById('edit-client').value = "";
+            document.getElementById('edit-check').value = "0원";
+            document.getElementById('edit-branch').value = "개인영업전략부";
+
             modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            setTimeout(() => { modal.querySelector('div').classList.remove('translate-y-full'); }, 10);
         }
 
-        // 저장 핸들러
         function saveTransaction() {
             const index = parseInt(document.getElementById('edit-index').value);
             const title = document.getElementById('edit-title').value.trim();
-            const fullDateStr = document.getElementById('edit-date').value.trim();
+            const fullDateStr = document.getElementById('edit-datetime').value.trim();
             const rawAmount = parseInt(document.getElementById('edit-amount').value);
-            const balance = parseInt(document.getElementById('edit-balance').value);
-            const type = document.getElementById('edit-type').value;
+            const sign = document.getElementById('edit-type-mark').textContent === '+' ? 1 : -1;
 
-            if (!title || !fullDateStr || isNaN(rawAmount) || isNaN(balance)) {
-                showAlert("입력 오류", "모든 입력값을 확인해 주세요.");
+            if (!title || isNaN(rawAmount)) {
+                showAlert("입력 오류", "거래처명과 금액을 모두 입력해 주세요.");
                 return;
             }
 
             let dateGroup = "6월 15일", time = "00:00:00";
-            if (fullDateStr.includes('·')) {
-                const parts = fullDateStr.split('·');
-                dateGroup = parts[0].trim(); time = parts[1].trim();
-            } else {
-                dateGroup = fullDateStr;
-            }
+            try {
+                const parts = fullDateStr.split(' ');
+                if(parts.length >= 2) {
+                    time = parts[1];
+                    const dParts = parts[0].split('.');
+                    if(dParts.length >= 3) {
+                        dateGroup = `${parseInt(dParts[1], 10)}월 ${parseInt(dParts[2], 10)}일`;
+                    }
+                }
+            } catch(e) {}
 
-            const amount = type === 'expense' ? -rawAmount : rawAmount;
+            const amount = rawAmount * sign;
+            const memo = document.getElementById('edit-memo').value;
+            const category = document.getElementById('edit-category').value;
+            const client = document.getElementById('edit-client').value;
+            const checkAmount = document.getElementById('edit-check').value;
+            const branch = document.getElementById('edit-branch').value;
 
             if (index === -1) {
-                transactions.unshift({ id: Date.now(), dateGroup, time, title, amount, balance });
+                transactions.push({ id: Date.now(), dateGroup, time, title, amount, balance: 0, memo, category, client, checkAmount, branch });
             } else {
-                transactions[index] = { ...transactions[index], title, dateGroup, time, amount, balance };
+                transactions[index] = { ...transactions[index], title, dateGroup, time, amount, memo, category, client, checkAmount, branch };
             }
 
+            recalculateAllBalances();
             saveToLocalStorage();
-            closeEditorModal();
+            closeDetailEdit();
             renderTransactions();
             updateMainDashboard();
         }
 
         async function deleteTransaction() {
             const index = parseInt(document.getElementById('edit-index').value);
-            if (index !== -1 && await showConfirm("거래 내역 삭제", "정말 삭제하시겠습니까?")) {
+            if (index !== -1 && await showConfirm("거래 내역 삭제", "정말 삭제하시겠습니까? (삭제 시 전체 잔액이 자동 재계산됩니다)")) {
                 transactions.splice(index, 1);
+                
+                recalculateAllBalances();
                 saveToLocalStorage();
-                closeEditorModal();
+                closeDetailEdit();
                 renderTransactions();
                 updateMainDashboard();
             }
