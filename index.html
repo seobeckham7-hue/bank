@@ -1140,11 +1140,11 @@
                 leftArea.className = "space-y-0.5";
                 
                 const titleNode = document.createElement('div');
-                titleNode.className = "text-[14px] font-bold text-gray-900";
+                titleNode.className = "text-[17px] font-bold text-gray-900";
                 titleNode.textContent = tx.title;
 
                 const timeNode = document.createElement('div');
-                timeNode.className = "text-[10px] text-gray-400 font-semibold";
+                timeNode.className = "text-[13px] text-gray-400 font-semibold";
                 timeNode.textContent = tx.time;
                 leftArea.appendChild(titleNode);
                 leftArea.appendChild(timeNode);
@@ -1154,15 +1154,15 @@
 
                 const amountNode = document.createElement('div');
                 if (tx.amount > 0) {
-                    amountNode.className = "text-[15px] font-extrabold text-[#3882F6]";
+                    amountNode.className = "text-[19px] font-extrabold text-[#3882F6]";
                     amountNode.textContent = `+${tx.amount.toLocaleString()}원`;
                 } else {
-                    amountNode.className = "text-[15px] font-extrabold text-gray-900";
+                    amountNode.className = "text-[19px] font-extrabold text-gray-900";
                     amountNode.textContent = `${tx.amount.toLocaleString()}원`;
                 }
 
                 const balanceNode = document.createElement('div');
-                balanceNode.className = "text-[10px] text-gray-400 font-semibold";
+                balanceNode.className = "text-[13px] text-gray-400 font-semibold";
                 balanceNode.textContent = `잔액 ${tx.balance.toLocaleString()}원`;
                 
                 if (!showBalance) balanceNode.style.display = 'none';
