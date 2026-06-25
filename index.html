@@ -222,6 +222,61 @@
         </div>
 
         <div id="main-screen" class="hidden flex-col h-full w-full">
+
+<div id="welcome-popup" class="absolute inset-0 bg-black/60 z-50 flex items-end justify-center hidden">
+                <div id="welcome-popup-content" class="w-full bg-white rounded-t-[20px] overflow-hidden shadow-2xl transform translate-y-full transition-transform duration-500 cubic-bezier-spring max-h-[70vh]">
+                    
+                    <div class="relative w-full h-28 bg-[#0043A8] flex items-center justify-between px-6 overflow-hidden">
+                        <div class="absolute inset-0 opacity-15">
+                            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <pattern id="airplane-pattern-mini" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                                        <path fill="#ffffff" d="M21 16v-2l8-5V3.5c0-.83.67-1.5 1.5-1.5S32 2.67 32 3.5V9l8 5v2l-8-2.5v5.5l2 1.5v1.5l-3.5-1-3.5 1v-1.5l2-1.5v-5.5L21 16z"/>
+                                    </pattern>
+                                </defs>
+                                <rect x="0" y="0" width="100%" height="100%" fill="url(#airplane-pattern-mini)"></rect>
+                            </svg>
+                        </div>
+                        
+                        <div class="z-10 flex items-center space-x-4">
+                            <div class="w-11 h-11 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 shadow-md shrink-0">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-blue-200 text-[10px] font-bold tracking-wider uppercase mb-0.5">Summer Event</p>
+                                <h2 class="text-white text-[17px] font-black tracking-tight leading-tight">환전주머니 최대 90% 우대</h2>
+                            </div>
+                        </div>
+                        
+                        <button onclick="closeWelcomePopup()" class="z-20 w-7 h-7 flex items-center justify-center bg-black/20 hover:bg-black/30 rounded-full transition-colors shrink-0">
+                            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="p-5 space-y-4">
+                        <div class="space-y-1">
+                            <h3 class="text-[15px] font-extrabold text-gray-900 tracking-tight">여름 휴가 준비, 환전부터 챙기세요!</h3>
+                            <p class="text-[12.5px] text-gray-500 font-medium leading-relaxed">주요 통화(USD, EUR, JPY) 환전 우대 혜택과<br>여행자보험 무료 가입 기회를 놓치지 마세요.</p>
+                        </div>
+
+                        <div class="bg-[#F8F9FA] rounded-xl p-3 flex justify-between items-center border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-indigo-100 text-indigo-600 text-[9px] font-extrabold px-1.5 py-0.5 rounded-sm tracking-wide">이벤트 기간</span>
+                                <span class="text-[11.5px] text-gray-700 font-bold">~ 8. 31(월) 까지</span>
+                            </div>
+                            <span class="text-gray-400 text-base font-bold leading-none">›</span>
+                        </div>
+
+                        <div class="flex space-x-2 pt-1">
+                            <button onclick="closeWelcomePopup()" class="flex-[3] bg-white border border-gray-200 text-gray-600 py-3 rounded-xl font-bold text-[13px] shadow-sm hover:bg-gray-50 transition-colors">오늘 안 보기</button>
+                            <button onclick="closeWelcomePopup()" class="flex-[7] bg-wonBlue text-white py-3 rounded-xl font-bold text-[13px] shadow-md hover:bg-blue-800 transition-colors">환전하러 가기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+   
             <div class="safe-top bg-wonBg"></div>
             <header class="px-5 py-3 flex justify-between items-center bg-wonBg">
                 <div class="flex bg-gray-200 p-0.5 rounded-full text-xs font-bold w-32 shadow-inner">
@@ -815,7 +870,7 @@
             }, 1750);
             timeouts.push(t2);
 
-            let t3 = setTimeout(() => {
+    let t3 = setTimeout(() => {
                 viewSuccess.classList.remove('opacity-100', 'scale-100', 'animate-success-bounce');
                 viewSuccess.classList.add('opacity-0', 'scale-75', 'pointer-events-none');
                 checkmarkPath.classList.remove('draw-checkmark');
@@ -825,12 +880,22 @@
 
                 const splash = document.getElementById('splash-screen');
                 splash.classList.add('opacity-0');
+                
+                // 스플래시 화면이 부드럽게 사라지는 400ms 뒤에 바로 메인과 팝업을 띄웁니다.
                 setTimeout(() => {
                     splash.style.display = 'none';
+                    
+                    // 1. 메인 화면을 활성화합니다.
                     document.getElementById('main-screen').classList.remove('hidden');
                     document.getElementById('main-screen').classList.add('flex');
+                    
+                    // 2. 잔액 숫자가 자릿수별로 랜덤하게 도르륵 차오릅니다.
                     updateMainDashboard();
-                }, 400);
+                    
+                    // 3. 메인 화면이 뜨는 타이밍에 맞춰 하단 팝업창을 즉시 호출합니다.
+                    openWelcomePopup();
+
+                }, 400); // 스플래시 페이드아웃 대기 시간 (0.4초)
             }, 2750);
             timeouts.push(t3);
 
@@ -1331,6 +1396,29 @@
                 updateMainDashboard();
             }
         }
+
+function openWelcomePopup() {
+            const popup = document.getElementById('welcome-popup');
+            const content = document.getElementById('welcome-popup-content');
+            if (popup && content) {
+                popup.classList.remove('hidden');
+                setTimeout(() => {
+                    content.classList.replace('translate-y-full', 'translate-y-0');
+                }, 30);
+            }
+        }
+
+        function closeWelcomePopup() {
+            const popup = document.getElementById('welcome-popup');
+            const content = document.getElementById('welcome-popup-content');
+            if (popup && content) {
+                content.classList.replace('translate-y-0', 'translate-y-full');
+                setTimeout(() => {
+                    popup.classList.add('hidden');
+                }, 500);
+            }
+        }
+
     </script>
 </body>
 </html>
