@@ -710,7 +710,7 @@
     </div>
     </div>
 
-    <div id="alert-modal" class="hidden fixed inset-0 bg-black/50 z-[310] items-center justify-center p-6">
+    <div id="alert-modal" class="hidden fixed inset-0 bg-black/50 z-[340] items-center justify-center p-6">
         <div class="bg-white rounded-2xl w-full max-w-xs p-5 space-y-4 text-center shadow-2xl">
             <h5 class="font-extrabold text-gray-800 text-base" id="alert-title">알림</h5>
             <p class="text-sm text-gray-500 leading-relaxed" id="alert-message">메시지 내용</p>
@@ -1049,6 +1049,20 @@
             normalizeDateFilterTo3Months();
         });
 
+             // 💡 스마트폰 하단 '뒤로가기' 또는 브라우저 '뒤로가기' 버튼을 누를 때만 작동
+       window.addEventListener('popstate', () => {
+            normalizeDateFilterTo3Months();
+           });
+
+// 💡 뒤로가기 등으로 이 페이지에 다시 진입했을 때를 감지
+window.addEventListener('pageshow', (event) => {
+    // event.persisted는 뒤로가기로 캐시된 페이지가 열렸을 때 true가 됩니다.
+    // 혹은 처음 진입했을 때도 안전하게 초기화하기 위해 조건을 아래와 같이 설정합니다.
+    if (event.persisted || window.performance && window.performance.navigation.type === 2) {
+        normalizeDateFilterTo3Months();
+    }
+});
+
         function saveToLocalStorage() {
             localStorage.setItem('won_banking_transactions_v13', JSON.stringify(transactions));
         }
@@ -1069,18 +1083,28 @@
         }
 
         function normalizeDateFilterTo3Months() {
-            parseFilterRange();
-            if (filterEnd === null) return; // 형식이 올바르지 않으면 그대로 둠
+    const endDate = new Date(); 
+    const startDate = new Date(endDate.getFullYear(), endDate.getMonth() - 3, endDate.getDate());
 
-            const endDate = new Date(filterEnd);
-            const startDate = new Date(endDate.getFullYear(), endDate.getMonth() - 3, endDate.getDate());
+    const newValue = `${formatDateForFilter(startDate)} ~ ${formatDateForFilter(endDate)}`;
 
-            const newValue = `${formatDateForFilter(startDate)} ~ ${formatDateForFilter(endDate)}`;
+    // 1. 화면의 input 엘리먼트 값 변경
+    const inputEl = document.getElementById('filter-date-input');
+    if (inputEl) {
+        inputEl.value = newValue;
+    }
+    
+    // 2. 다음 진입을 위한 데이터 저장 및 파싱
+    localStorage.setItem('won_banking_date_filter', newValue);
+    if (typeof parseFilterRange === 'function') parseFilterRange();
 
-            document.getElementById('filter-date-input').value = newValue;
-            localStorage.setItem('won_banking_date_filter', newValue);
-            parseFilterRange();
-        }
+    // 3. 캘린더 내부 변수도 오늘 기준으로 리셋 (유저가 다시 켰을 때 오늘 달력이 보이도록)
+    calViewYear = endDate.getFullYear();
+    calViewMonth = endDate.getMonth();
+    
+    // 4. 만약 달력 그리드가 열려있다면 화면 갱신
+    if (typeof renderCalGrid === 'function') renderCalGrid();
+}
 
         // 💡 조회기간 캘린더 모달: 열기
 function openDateFilterModal() {
