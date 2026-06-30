@@ -563,23 +563,48 @@
                     </div>
                 </div>
 
-                <div class="px-5 py-3.5 space-y-3 bg-white border-b border-gray-100">
-                    <div class="flex justify-between items-center text-sm">
-                        <div class="flex items-center space-x-1.5 text-gray-500 font-bold">
-                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            <input type="text" id="filter-date-input" class="bg-transparent rounded-md font-bold text-gray-700 text-[13px] w-[178px] text-center pb-0.5 transition shrink-0 cursor-pointer" value="2026.03.25 ~ 2026.06.25" readonly onclick="openDateFilterModal()">
-                            <span class="text-xs text-gray-400 font-semibold">· 조회기간 · 전체</span>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2">
-                            <span class="text-[11px] text-gray-500 font-bold">잔액 표시</span>
-                            <div class="relative inline-block w-8 mr-1 align-middle select-none">
-                                <input type="checkbox" name="toggle" id="balance-toggle" checked onchange="toggleBalanceDisplay()" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-gray-300 appearance-none cursor-pointer focus:outline-none"/>
-                                <label for="balance-toggle" class="toggle-label block overflow-hidden h-4 rounded-full bg-gray-300 cursor-pointer"></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               <div class="px-5 py-3.5 space-y-3 bg-white border-b border-gray-100">
+    <div class="flex justify-between items-center min-w-0 h-7">
+        <div class="flex items-center space-x-2 flex-1 mr-4 min-w-0">
+            <button onclick="toggleSearchInput()" class="text-gray-500 hover:text-wonBlue transition shrink-0 p-1 -m-1 focus:outline-none" title="거래내역 검색">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </button>
+
+            <input type="text" id="search-keyword-input" oninput="handleSearchInput()" onkeydown="if(event.key==='Enter') pinSearchKeyword()" onblur="pinSearchKeyword()" placeholder="내역 검색 (예: 스타벅스)" class="hidden bg-gray-50 border border-gray-200 rounded-lg px-2 py-0.5 text-[13px] font-medium text-gray-700 w-full focus:outline-none focus:border-wonBlue">
+
+            <div id="search-badge-wrapper" class="hidden flex items-center space-x-1 bg-blue-50 text-wonBlue border border-blue-100 px-2.5 py-0.5 rounded-full text-[12px] font-bold max-w-full min-w-0">
+                <span id="search-badge-text" class="truncate"></span>
+                <button onclick="clearSearch()" class="text-blue-300 hover:text-wonBlue font-black text-[14px] pl-1.5 focus:outline-none" style="line-height: 1;">×</button>
+            </div>
+        </div>
+
+ <div id="filter-summary-text" class="flex items-center space-x-1 text-gray-700 font-bold text-[14px] shrink-0">
+    <span><span id="filter-duration-text">3개월</span> · 전체 · 최신순</span>
+    
+    <button onclick="openDateFilterModal()" class="text-gray-500 hover:text-wonBlue transition p-1 -mr-1 focus:outline-none cursor-pointer flex items-center" title="조회 조건 변경">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+        </svg>
+    </button>
+</div>
+    </div>
+
+    <div class="flex justify-between items-center min-w-0 pt-1">
+        <div id="date-input-wrapper" class="min-w-0">
+    <input type="text" id="filter-date-input" class="bg-transparent text-gray-800 text-[16px] font-bold w-[210px] text-left focus:outline-none pointer-events-none cursor-default" value="2026.03.29 ~ 2026.06.29" readonly>
+</div>
+
+        <div class="flex items-center space-x-2 shrink-0">
+            <span class="text-[14px] text-gray-700 font-bold">잔액 표시</span>
+            <div class="relative inline-block w-8 align-middle select-none">
+                <input type="checkbox" name="toggle" id="balance-toggle" checked onchange="toggleBalanceDisplay()" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-gray-300 appearance-none cursor-pointer focus:outline-none"/>
+                <label for="balance-toggle" class="toggle-label block overflow-hidden h-4 rounded-full bg-gray-300 cursor-pointer"></label>
+            </div>
+        </div>
+    </div>
+</div>
 
                 <div class="flex-1 overflow-y-auto px-5 divide-y divide-gray-50 no-scrollbar pb-32" id="transaction-list-container"></div>
             </div>
@@ -676,12 +701,12 @@
                 <button onclick="confirmDateFilter()" class="text-wonBlue text-sm font-bold px-1">확인</button>
             </div>
 
-            <div class="flex justify-center space-x-2 px-5 pt-3 pb-1 shrink-0">
-                <button class="flex-1 py-1.5 rounded-full bg-gray-100 text-gray-600 text-[12px] font-bold active:bg-gray-200" onclick="applyQuickRange(7)">1주일</button>
-                <button class="flex-1 py-1.5 rounded-full bg-gray-100 text-gray-600 text-[12px] font-bold active:bg-gray-200" onclick="applyQuickRange(30)">1개월</button>
-                <button class="flex-1 py-1.5 rounded-full bg-gray-100 text-gray-600 text-[12px] font-bold active:bg-gray-200" onclick="applyQuickRange(90)">3개월</button>
-                <button class="flex-1 py-1.5 rounded-full bg-gray-100 text-gray-600 text-[12px] font-bold active:bg-gray-200" onclick="applyQuickRange(365)">1년</button>
-            </div>
+        <div class="flex justify-center space-x-2 px-5 pt-3 pb-1 shrink-0">
+    <button class="flex-1 py-1.5 rounded-full bg-gray-100 text-gray-600 text-[12px] font-bold active:bg-gray-200" onclick="applyQuickRange('thisMonth')">이번달</button>
+    <button class="flex-1 py-1.5 rounded-full bg-gray-100 text-gray-600 text-[12px] font-bold active:bg-gray-200" onclick="applyQuickRange(90)">3개월</button>
+    <button class="flex-1 py-1.5 rounded-full bg-gray-100 text-gray-600 text-[12px] font-bold active:bg-gray-200" onclick="applyQuickRange(180)">6개월</button>
+    <button class="flex-1 py-1.5 rounded-full bg-gray-100 text-gray-600 text-[12px] font-bold active:bg-gray-200" onclick="applyQuickRange(365)">1년</button>
+</div>
 
             <div class="px-5 py-2 text-center shrink-0">
                 <span id="date-filter-selection-label" class="text-[13px] font-bold text-wonBlue">시작일을 선택해 주세요</span>
@@ -1054,26 +1079,47 @@
             normalizeDateFilterTo3Months();
            });
 
-// 💡 뒤로가기 등으로 이 페이지에 다시 진입했을 때를 감지
+// 💡 1. 뒤로가기 등으로 이 페이지에 다시 진입했을 때를 감지하여 초기화
 window.addEventListener('pageshow', (event) => {
     // event.persisted는 뒤로가기로 캐시된 페이지가 열렸을 때 true가 됩니다.
     // 혹은 처음 진입했을 때도 안전하게 초기화하기 위해 조건을 아래와 같이 설정합니다.
-    if (event.persisted || window.performance && window.performance.navigation.type === 2) {
-        normalizeDateFilterTo3Months();
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        
+        // 상단 요약 텍스트와 전역 변수 상태를 3개월 상태로 안전하게 원복
+        const durationLabel = document.getElementById('filter-duration-text');
+        if (durationLabel) {
+            durationLabel.textContent = "3개월";
+        }
+        
+        // 상단 전역 변수가 혹시 선언되어 있다면 기본값인 "3m"으로 동기화
+        if (typeof lastSelectedRangeType !== 'undefined') {
+            lastSelectedRangeType = "3m";
+        }
+
+        // 기존에 작동하던 3개월 날짜 복구 함수 실행
+        if (typeof normalizeDateFilterTo3Months === 'function') {
+            normalizeDateFilterTo3Months();
+        }
     }
 });
 
-        function saveToLocalStorage() {
-            localStorage.setItem('won_banking_transactions_v13', JSON.stringify(transactions));
-        }
+// 💡 2. 로컬 스토리지에 트랜잭션 데이터 저장
+function saveToLocalStorage() {
+    localStorage.setItem('won_banking_transactions_v13', JSON.stringify(transactions));
+}
 
-        function saveDateFilter() {
-            const filterVal = document.getElementById('filter-date-input').value.trim();
-            localStorage.setItem('won_banking_date_filter', filterVal);
-            parseFilterRange();
-            renderTransactions();
-        }
+// 💡 3. 선택 완료된 날짜 필터 저장 및 데이터 재필터링
+function saveDateFilter() {
+    const filterInput = document.getElementById('filter-date-input');
+    if (!filterInput) return;
 
+    const filterVal = filterInput.value.trim();
+    localStorage.setItem('won_banking_date_filter', filterVal);
+    
+    // 기존 데이터 필터링 및 렌더링 함수 호출
+    if (typeof parseFilterRange === 'function') parseFilterRange();
+    if (typeof renderTransactions === 'function') renderTransactions();
+}
         // 💡 종료/뒤로가기 시 조회기간을 "끝 날짜 기준 3개월 전 ~ 끝 날짜"로 되돌리는 함수
         function formatDateForFilter(d) {
             const y = d.getFullYear();
@@ -1082,7 +1128,7 @@ window.addEventListener('pageshow', (event) => {
             return `${y}.${mo}.${da}`;
         }
 
-        function normalizeDateFilterTo3Months() {
+       function normalizeDateFilterTo3Months() {
     const endDate = new Date(); 
     const startDate = new Date(endDate.getFullYear(), endDate.getMonth() - 3, endDate.getDate());
 
@@ -1104,6 +1150,98 @@ window.addEventListener('pageshow', (event) => {
     
     // 4. 만약 달력 그리드가 열려있다면 화면 갱신
     if (typeof renderCalGrid === 'function') renderCalGrid();
+
+    // 🛠️ 5. [여기에 추가] 뒤로가기 등으로 3개월 원복될 때 상단 요약 문자열과 전역 변수도 "3개월"로 강제 동기화
+    const durationLabel = document.getElementById('filter-duration-text');
+    if (durationLabel) {
+        durationLabel.textContent = "3개월";
+    }
+    if (typeof lastSelectedRangeType !== 'undefined') {
+        lastSelectedRangeType = "3m";
+    }
+}
+
+// 전역 변수 (기존 유지)
+let searchKeyword = "";
+
+/**
+ * 💡 1. 돋보기 클릭 시 호출
+ */
+function toggleSearchInput() {
+    const searchInput = document.getElementById('search-keyword-input');
+    const badgeWrapper = document.getElementById('search-badge-wrapper');
+    const filterSummary = document.getElementById('filter-summary-text');
+    
+    // 이미 검색 배지가 켜져 있다면 다시 검색할 수 있게 인풋창 열기
+    if (!badgeWrapper.classList.contains('hidden')) {
+        badgeWrapper.classList.add('hidden');
+        searchInput.classList.remove('hidden');
+        searchInput.value = searchKeyword; 
+        searchInput.focus();
+        return;
+    }
+
+    if (searchInput.classList.contains('hidden')) {
+        searchInput.classList.remove('hidden');
+        filterSummary.classList.add('hidden'); // '3개월...' 텍스트만 숨김
+        searchInput.focus(); 
+    } else {
+        pinSearchKeyword();
+    }
+}
+
+/**
+ * 💡 2. 글자 입력 시 호출
+ */
+function handleSearchInput() {
+    const inputVal = document.getElementById('search-keyword-input').value.trim();
+    searchKeyword = inputVal.toLowerCase();
+    renderTransactions();
+}
+
+/**
+ * 💡 3. 엔터나 포커스 아웃(바깥 터치) 시 호출
+ */
+function pinSearchKeyword() {
+    const searchInput = document.getElementById('search-keyword-input');
+    const badgeWrapper = document.getElementById('search-badge-wrapper');
+    const badgeText = document.getElementById('search-badge-text');
+    const filterSummary = document.getElementById('filter-summary-text');
+
+    searchInput.classList.add('hidden'); // 입력창은 무조건 숨김
+
+    if (searchKeyword !== "") {
+        // 검색어가 있으면 배지 노출, '3개월...' 문구는 숨김
+        badgeText.textContent = `검색어: ${searchInput.value.trim()}`;
+        badgeWrapper.classList.remove('hidden');
+        filterSummary.classList.add('hidden');
+    } else {
+        // 🛠️ 검색어가 비어있으면 배지 숨기고 '3개월...' 문구 원복 (날짜는 건드리지 않음)
+        searchInput.value = "";
+        badgeWrapper.classList.add('hidden');
+        filterSummary.classList.remove('hidden');
+        renderTransactions(); 
+    }
+}
+
+/**
+ * 💡 4. 태그 옆 '×' 버튼을 눌렀을 때 완전히 초기화하는 함수
+ */
+function clearSearch() {
+    const searchInput = document.getElementById('search-keyword-input');
+    const badgeWrapper = document.getElementById('search-badge-wrapper');
+    const filterSummary = document.getElementById('filter-summary-text');
+
+    // 값 초기화
+    searchInput.value = "";
+    searchKeyword = "";
+    
+    // UI 원복 ('3개월...' 문구만 다시 노출)
+    badgeWrapper.classList.add('hidden');
+    filterSummary.classList.remove('hidden');
+    
+    // 전체 데이터 리렌더링
+    renderTransactions();
 }
 
         // 💡 조회기간 캘린더 모달: 열기
@@ -1202,6 +1340,9 @@ function renderCalGrid() {
 
 // 💡 날짜 클릭: 시작일 -> 종료일 순서로 선택, 다시 클릭하면 새로 시작
 function selectCalDate(y, m, d) {
+    // ➕ [이 줄을 새로 추가] 달력 날짜를 직접 클릭했으므로 '직접입력' 상태로 변경!
+    lastSelectedRangeType = "custom"; 
+
     const ts = new Date(y, m, d, 0, 0, 0).getTime();
 
     if (calSelectStart === null || calSelectEnd !== null) {
@@ -1237,35 +1378,74 @@ function updateSelectionLabel() {
     }
 }
 
-        // 💡 1주일/1개월/3개월/1년 빠른 선택
-        function applyQuickRange(days) {
-            const end = new Date();
-            end.setHours(0, 0, 0, 0);
-            const start = new Date(end);
-            start.setDate(start.getDate() - (days - 1));
+        // 💡 이번달/3개월/6개월/1년 빠른 선택
+ // ➕ [전역 변수 구역에 추가] 처음에 기본값인 3개월('3m') 상태로 시작하도록 세팅
+let lastSelectedRangeType = "3m"; 
 
-            calSelectStart = start.getTime();
-            calSelectEnd = end.getTime();
-            calViewYear = end.getFullYear();
-            calViewMonth = end.getMonth();
+function applyQuickRange(days) {
+    const end = new Date();
+    end.setHours(0, 0, 0, 0); 
+    
+    let start;
 
-            renderCalGrid();
-            updateSelectionLabel();
-        }
+    if (days === 'thisMonth') {
+        start = new Date(end.getFullYear(), end.getMonth(), 1);
+        lastSelectedRangeType = "thisMonth"; // ➕ 상태 기록
+    } else {
+        start = new Date(end);
+        start.setDate(start.getDate() - (days - 1));
+        
+        // ➕ 상태 기록 (넘어온 일수에 따라 매핑)
+        if (days === 90) lastSelectedRangeType = "3m";
+        else if (days === 180) lastSelectedRangeType = "6m";
+        else if (days === 365) lastSelectedRangeType = "1y";
+    }
+
+    calSelectStart = start.getTime();
+    calSelectEnd = end.getTime();
+    calViewYear = end.getFullYear();
+    calViewMonth = end.getMonth();
+
+    renderCalGrid();
+    updateSelectionLabel();
+}
 
         // 💡 선택 완료: 조회기간 입력값에 반영하고 거래내역 재필터링
         function confirmDateFilter() {
-            if (calSelectStart === null) {
-                showAlert("조회기간 선택", "조회 시작일을 선택해 주세요.");
-                return;
-            }
-            const endTs = calSelectEnd !== null ? calSelectEnd : calSelectStart;
-            const newValue = `${formatDateForFilter(new Date(calSelectStart))} ~ ${formatDateForFilter(new Date(endTs))}`;
+    if (calSelectStart === null) {
+        showAlert("조회기간 선택", "조회 시작일을 선택해 주세요.");
+        return;
+    }
+    const endTs = calSelectEnd !== null ? calSelectEnd : calSelectStart;
+    const newValue = `${formatDateForFilter(new Date(calSelectStart))} ~ ${formatDateForFilter(new Date(endTs))}`;
 
-            document.getElementById('filter-date-input').value = newValue;
-            saveDateFilter();
-            closeDateFilterModal();
+    document.getElementById('filter-date-input').value = newValue;
+    
+    // 🛠️ [새로 추가] 상단 요약 텍스트('3개월') 영역을 선택된 타입에 맞게 가공합니다.
+    const durationLabel = document.getElementById('filter-duration-text');
+    if (durationLabel) {
+        switch (lastSelectedRangeType) {
+            case 'thisMonth':
+                durationLabel.textContent = "이번달";
+                break;
+            case '3m':
+                durationLabel.textContent = "3개월";
+                break;
+            case '6m':
+                durationLabel.textContent = "6개월";
+                break;
+            case '1y':
+                durationLabel.textContent = "1년";
+                break;
+            default:
+                durationLabel.textContent = "직접입력"; // 달력을 직접 클릭해 들어왔을 때
+                break;
         }
+    }
+
+    saveDateFilter();
+    closeDateFilterModal();
+}
 
     // 💡 잔액 카운트업(올라가는) 애니메이션 - 슬롯머신/자릿수 랜덤 변경 효과
         const BALANCE_ANIM_START = 1000000;
@@ -1394,88 +1574,104 @@ function updateSelectionLabel() {
             renderTransactions();
         }
 
-        function renderTransactions() {
-            const container = document.getElementById('transaction-list-container');
-            container.innerHTML = "";
+       function renderTransactions() {
+    const container = document.getElementById('transaction-list-container');
+    container.innerHTML = "";
 
-            // 💡 조회기간 필터 적용 (원본 transactions 배열의 index는 그대로 유지)
-            const filtered = transactions
-                .map((tx, index) => ({ tx, index }))
-                .filter(({ tx }) => {
-                    if (filterStart === null || filterEnd === null) return true;
-                    const t = getTxDateValue(tx);
-                    return t >= filterStart && t <= filterEnd;
-                });
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<div class="py-20 text-center text-gray-400 text-xs font-semibold">조회기간 내 거래 내역이 존재하지 않습니다.</div>`;
-                return;
+    // 💡 조회기간 필터 + 검색어 필터 동시 적용 (원본 transactions 배열의 index는 그대로 유지)
+    const filtered = transactions
+        .map((tx, index) => ({ tx, index }))
+        .filter(({ tx }) => {
+            // [조건 1] 날짜 범위 체크
+            let isWithinDate = true;
+            if (filterStart !== null && filterEnd !== null) {
+                const t = getTxDateValue(tx);
+                isWithinDate = (t >= filterStart && t <= filterEnd);
             }
+            
+            // [조건 2] 검색어 체크 (대소문자 구분 없이 제목 포함 여부 확인)
+            const txTitle = tx.title || "";
+            const isMatchKeyword = txTitle.toLowerCase().includes(searchKeyword);
+            
+            // 두 조건을 모두 통과해야 함
+            return isWithinDate && isMatchKeyword;
+        });
 
-            let currentGroupDate = "";
-            let groupDiv = null;
-            let itemsContainer = null;
+    // 💡 검색 결과나 날짜 필터 결과가 없을 때 문구 처리
+    if (filtered.length === 0) {
+        // 검색창이 켜져 있는 상태인지 여부에 따라 문구를 매끄럽게 변경해 줍니다.
+        const msg = searchKeyword 
+            ? "검색어와 일치하는 거래 내역이 없습니다." 
+            : "조회기간 내 거래 내역이 존재하지 않습니다.";
+            
+        container.innerHTML = `<div class="py-20 text-center text-gray-400 text-xs font-semibold">${msg}</div>`;
+        return;
+    }
 
-            filtered.forEach(({ tx, index }) => {
-                if (tx.dateGroup !== currentGroupDate) {
-                    currentGroupDate = tx.dateGroup;
-                    groupDiv = document.createElement('div');
-                    groupDiv.className = "py-4 space-y-4";
-                    
-                    const dateHeader = document.createElement('div');
-                    dateHeader.className = "text-[12px] font-extrabold text-gray-400 mb-2 mt-1";
-                    dateHeader.textContent = tx.dateGroup;
-                    groupDiv.appendChild(dateHeader);
+    let currentGroupDate = "";
+    let groupDiv = null;
+    let itemsContainer = null;
 
-                    itemsContainer = document.createElement('div');
-                    itemsContainer.className = "space-y-4";
-                    groupDiv.appendChild(itemsContainer);
-                    container.appendChild(groupDiv);
-                }
+    filtered.forEach(({ tx, index }) => {
+        if (tx.dateGroup !== currentGroupDate) {
+            currentGroupDate = tx.dateGroup;
+            groupDiv = document.createElement('div');
+            groupDiv.className = "py-4 space-y-4";
+            
+            const dateHeader = document.createElement('div');
+            dateHeader.className = "text-[12px] font-extrabold text-gray-400 mb-2 mt-1";
+            dateHeader.textContent = tx.dateGroup;
+            groupDiv.appendChild(dateHeader);
 
-                const itemDiv = document.createElement('div');
-                itemDiv.className = "flex justify-between items-center cursor-pointer active:bg-gray-50/70 py-1 rounded transition";
-                itemDiv.onclick = () => openEditModal(index);
-
-                const leftArea = document.createElement('div');
-                leftArea.className = "space-y-0.5";
-                
-                const titleNode = document.createElement('div');
-                titleNode.className = "text-[17px] font-bold text-gray-900";
-                titleNode.textContent = tx.title;
-
-                const timeNode = document.createElement('div');
-                timeNode.className = "text-[13px] text-gray-400 font-semibold";
-                timeNode.textContent = tx.time;
-                leftArea.appendChild(titleNode);
-                leftArea.appendChild(timeNode);
-
-                const rightArea = document.createElement('div');
-                rightArea.className = "text-right space-y-0.5";
-
-                const amountNode = document.createElement('div');
-                if (tx.amount > 0) {
-                    amountNode.className = "text-[19px] font-extrabold text-[#3882F6]";
-                    amountNode.textContent = `+${tx.amount.toLocaleString()}원`;
-                } else {
-                    amountNode.className = "text-[19px] font-extrabold text-gray-900";
-                    amountNode.textContent = `${tx.amount.toLocaleString()}원`;
-                }
-
-                const balanceNode = document.createElement('div');
-                balanceNode.className = "text-[13px] text-gray-400 font-semibold";
-                balanceNode.textContent = `잔액 ${tx.balance.toLocaleString()}원`;
-                
-                if (!showBalance) balanceNode.style.display = 'none';
-
-                rightArea.appendChild(amountNode);
-                rightArea.appendChild(balanceNode);
-
-                itemDiv.appendChild(leftArea);
-                itemDiv.appendChild(rightArea);
-                itemsContainer.appendChild(itemDiv);
-            });
+            itemsContainer = document.createElement('div');
+            itemsContainer.className = "space-y-4";
+            groupDiv.appendChild(itemsContainer);
+            container.appendChild(groupDiv);
         }
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = "flex justify-between items-center cursor-pointer active:bg-gray-50/70 py-1 rounded transition";
+        itemDiv.onclick = () => openEditModal(index); // 필터링되어도 원본 index가 전달되므로 안전합니다!
+
+        const leftArea = document.createElement('div');
+        leftArea.className = "space-y-0.5";
+        
+        const titleNode = document.createElement('div');
+        titleNode.className = "text-[17px] font-bold text-gray-900";
+        titleNode.textContent = tx.title;
+
+        const timeNode = document.createElement('div');
+        timeNode.className = "text-[13px] text-gray-400 font-semibold";
+        timeNode.textContent = tx.time;
+        leftArea.appendChild(titleNode);
+        leftArea.appendChild(timeNode);
+
+        const rightArea = document.createElement('div');
+        rightArea.className = "text-right space-y-0.5";
+
+        const amountNode = document.createElement('div');
+        if (tx.amount > 0) {
+            amountNode.className = "text-[19px] font-extrabold text-[#3882F6]";
+            amountNode.textContent = `+${tx.amount.toLocaleString()}원`;
+        } else {
+            amountNode.className = "text-[19px] font-extrabold text-gray-900";
+            amountNode.textContent = `${tx.amount.toLocaleString()}원`;
+        }
+
+        const balanceNode = document.createElement('div');
+        balanceNode.className = "text-[13px] text-gray-400 font-semibold";
+        balanceNode.textContent = `잔액 ${tx.balance.toLocaleString()}원`;
+        
+        if (!showBalance) balanceNode.style.display = 'none';
+
+        rightArea.appendChild(amountNode);
+        rightArea.appendChild(balanceNode);
+
+        itemDiv.appendChild(leftArea);
+        itemDiv.appendChild(rightArea);
+        itemsContainer.appendChild(itemDiv);
+    });
+}
 
         function showAlert(title, message) {
             document.getElementById('alert-title').textContent = title;
